@@ -41,15 +41,17 @@ function Index() {
   return (
     <div id="inicio" className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Header />
-      <Hero />
-      <FindCar />
-      <Vehicles />
-      <Advantages />
-      <Simulator />
-      <Trade />
-      <Testimonials />
-      <Faq />
-      <FinalCta />
+      <main className="pb-28 sm:pb-0">
+        <Hero />
+        <FindCar />
+        <Vehicles />
+        <Advantages />
+        <Simulator />
+        <Trade />
+        <Testimonials />
+        <Faq />
+        <FinalCta />
+      </main>
       <Footer />
       <FloatingWhatsapp />
     </div>
@@ -62,30 +64,30 @@ function Index() {
 
 function Hero() {
   return (
-    <section className="relative pt-28 pb-16 sm:pt-36 sm:pb-24 overflow-hidden">
+    <section className="relative pt-24 pb-12 sm:pt-36 sm:pb-24 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-hero" />
       <div className="absolute top-20 -right-32 h-96 w-96 rounded-full bg-primary/20 blur-3xl" />
       <div className="absolute bottom-0 -left-32 h-96 w-96 rounded-full bg-accent/20 blur-3xl" />
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-10 sm:gap-12 items-center">
         <div className="animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-card border border-border text-xs font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-card border border-border text-[11px] sm:text-xs font-medium mb-5">
             <Sparkles className="h-3.5 w-3.5 text-primary" />
-            Aprovação inteligente · +12 financeiras parceiras
+            <span className="truncate">Aprovação inteligente · +12 financeiras</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.05] tracking-tight">
+          <h1 className="text-[32px] sm:text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight text-balance">
             Seu próximo carro começa com a <span className="text-gradient-red">aprovação certa</span>
           </h1>
-          <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-xl leading-relaxed">
+          <p className="mt-4 sm:mt-5 text-[15px] sm:text-lg text-muted-foreground max-w-xl leading-relaxed">
             Veículos selecionados, financiamento facilitado e atendimento especializado para você sair de carro novo com segurança.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button asChild size="lg" className="bg-gradient-red shadow-glow-red hover:opacity-90 h-12 px-6">
+          <div className="mt-7 sm:mt-8 flex flex-col sm:flex-row sm:flex-wrap gap-3">
+            <Button asChild size="lg" className="bg-gradient-red shadow-glow-red hover:opacity-90 h-12 px-6 w-full sm:w-auto">
               <Link to="/financiamento"><Calculator className="h-5 w-5" /> Simular financiamento</Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="h-12 px-6 border-border bg-card/50 backdrop-blur">
+            <Button asChild size="lg" variant="outline" className="h-12 px-6 border-border bg-card/50 backdrop-blur w-full sm:w-auto">
               <Link to="/estoque"><Car className="h-5 w-5" /> Ver veículos</Link>
             </Button>
-            <Button asChild size="lg" variant="ghost" className="h-12 px-6 text-foreground hover:bg-muted">
+            <Button asChild size="lg" variant="ghost" className="h-12 px-6 text-foreground hover:bg-muted w-full sm:w-auto">
               <a href={WHATSAPP} target="_blank" rel="noopener noreferrer"><MessageCircle className="h-5 w-5" /> WhatsApp</a>
             </Button>
           </div>
@@ -168,7 +170,7 @@ function FindCar() {
           <h2 className="text-3xl sm:text-4xl font-bold">Encontre o carro ideal para você</h2>
           <p className="mt-3 text-muted-foreground">Responda em segundos e veja opções com parcela que cabe no seu bolso.</p>
         </div>
-        <div className="rounded-3xl border border-border bg-card/60 backdrop-blur p-6 sm:p-10 shadow-card-premium">
+        <div className="rounded-3xl border border-border bg-card/60 backdrop-blur p-5 sm:p-10 shadow-card-premium">
           <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-5">
             {[
               { label: "Orçamento total", placeholder: "R$ 80.000" },
@@ -431,9 +433,9 @@ function Simulator() {
           </div>
           <div className="relative">
             <div className="absolute -inset-6 bg-gradient-blue opacity-20 blur-3xl rounded-3xl" />
-            <div className="relative rounded-3xl border border-border bg-card p-8 shadow-card-premium">
+            <div className="relative rounded-3xl border border-border bg-card p-6 sm:p-8 shadow-card-premium">
               <div className="text-sm text-muted-foreground">Parcela estimada</div>
-              <div className="mt-2 text-5xl sm:text-6xl font-display font-extrabold text-gradient-red">
+              <div className="mt-2 text-4xl sm:text-6xl font-display font-extrabold text-gradient-red break-words">
                 {fmt(parcela)}
               </div>
               <div className="mt-1 text-xs text-muted-foreground">por mês · {prazo}x</div>
@@ -605,23 +607,23 @@ function Faq() {
 
 function FinalCta() {
   return (
-    <section id="contato" className="py-20 sm:py-28 relative overflow-hidden">
+    <section id="contato" className="py-16 sm:py-28 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-red opacity-15" />
       <div className="absolute inset-0 bg-gradient-hero" />
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-4xl sm:text-6xl font-display font-extrabold leading-tight">
+        <h2 className="text-[34px] sm:text-6xl font-display font-extrabold leading-[1.1] text-balance">
           Pronto para sair de <span className="text-gradient-red">carro novo?</span>
         </h2>
-        <p className="mt-5 text-lg text-muted-foreground max-w-xl mx-auto">
+        <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-xl mx-auto">
           Fale agora com um consultor Top Veículos e receba a melhor proposta do mercado.
         </p>
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Button asChild size="lg" className="bg-gradient-red shadow-glow-red h-13 px-7 text-base h-12">
+        <div className="mt-8 flex flex-col sm:flex-row sm:flex-wrap justify-center gap-3">
+          <Button asChild size="lg" className="bg-gradient-red shadow-glow-red h-14 sm:h-12 px-7 text-base w-full sm:w-auto">
             <a href={createWhatsAppLink(WA_MSG.cta)} target="_blank" rel="noopener noreferrer">
               <MessageCircle className="h-5 w-5" /> Falar no WhatsApp
             </a>
           </Button>
-          <Button asChild size="lg" variant="outline" className="border-border h-12 px-7 text-base">
+          <Button asChild size="lg" variant="outline" className="border-border h-14 sm:h-12 px-7 text-base w-full sm:w-auto">
             <Link to="/financiamento"><Calculator className="h-5 w-5" /> Simular agora</Link>
           </Button>
         </div>

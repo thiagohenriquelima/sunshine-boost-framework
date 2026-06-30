@@ -67,21 +67,21 @@ export function Header() {
         </button>
       </div>
       {menuOpen && (
-        <div className="lg:hidden border-t border-border bg-background/95 backdrop-blur-xl animate-fade-in">
+        <div className="lg:hidden border-t border-border bg-background/95 backdrop-blur-xl animate-fade-in max-h-[calc(100vh-4rem)] overflow-y-auto">
           <div className="px-4 py-4 flex flex-col gap-1">
             {NAV.map((n) => (
               <Link
                 key={n.to}
                 to={n.to}
                 onClick={() => setMenuOpen(false)}
-                className="px-3 py-3 rounded-md text-sm hover:bg-muted transition-colors"
+                className="px-3 py-3.5 rounded-md text-base hover:bg-muted active:bg-muted transition-colors"
               >
                 {n.label}
               </Link>
             ))}
-            <Button asChild className="mt-3 bg-gradient-red shadow-glow-red">
-              <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
-                <MessageCircle className="h-4 w-4" /> Falar no WhatsApp
+            <Button asChild className="mt-3 bg-gradient-red shadow-glow-red h-12 text-base">
+              <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}>
+                <MessageCircle className="h-5 w-5" /> Falar no WhatsApp
               </a>
             </Button>
           </div>
@@ -114,9 +114,15 @@ export function Footer() {
 
 export function FloatingWhatsapp() {
   return (
-    <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className="fixed bottom-5 right-5 z-50 group">
+    <a
+      href={WHATSAPP}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Falar no WhatsApp"
+      className="fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-50 group"
+    >
       <span className="absolute inset-0 rounded-full bg-[var(--whatsapp)] opacity-30 blur-xl animate-pulse" />
-      <span className="relative flex items-center gap-2 h-14 px-5 rounded-full bg-[var(--whatsapp)] text-white font-semibold shadow-[0_10px_30px_-5px_oklch(0.7_0.18_150/0.6)] hover:scale-105 transition-transform">
+      <span className="relative flex items-center justify-center gap-2 h-14 w-14 sm:w-auto sm:px-5 rounded-full bg-[var(--whatsapp)] text-white font-semibold shadow-[0_10px_30px_-5px_oklch(0.7_0.18_150/0.6)] active:scale-95 sm:hover:scale-105 transition-transform">
         <MessageCircle className="h-6 w-6" />
         <span className="hidden sm:inline">Falar no WhatsApp</span>
       </span>
@@ -128,7 +134,7 @@ export function PageShell({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Header />
-      <main className="pt-16">{children}</main>
+      <main className="pt-16 pb-28 sm:pb-16">{children}</main>
       <Footer />
       <FloatingWhatsapp />
     </div>
@@ -137,7 +143,7 @@ export function PageShell({ children }: { children: ReactNode }) {
 
 export function PageHero({ eyebrow, title, subtitle }: { eyebrow: ReactNode; title: ReactNode; subtitle: string }) {
   return (
-    <section className="relative pt-16 pb-12 sm:pt-24 sm:pb-16 overflow-hidden">
+    <section className="relative pt-10 pb-10 sm:pt-24 sm:pb-16 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-hero" />
       <div className="absolute top-10 -right-32 h-80 w-80 rounded-full bg-primary/20 blur-3xl" />
       <div className="absolute bottom-0 -left-32 h-80 w-80 rounded-full bg-accent/20 blur-3xl" />
@@ -145,8 +151,8 @@ export function PageHero({ eyebrow, title, subtitle }: { eyebrow: ReactNode; tit
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-card border border-border text-xs font-medium mb-5">
           {eyebrow}
         </div>
-        <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.05]">{title}</h1>
-        <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">{subtitle}</p>
+        <h1 className="text-[28px] leading-[1.1] sm:text-5xl font-extrabold tracking-tight text-balance">{title}</h1>
+        <p className="mt-4 sm:mt-5 text-[15px] sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">{subtitle}</p>
       </div>
     </section>
   );
