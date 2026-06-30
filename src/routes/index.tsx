@@ -1,19 +1,21 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import {
-  Car, Phone, MessageCircle, CheckCircle2, Calculator, Sparkles,
-  ShieldCheck, Clock, Users, FileText, ArrowRight, Star, Gauge,
-  Calendar, Settings2, Menu, X, Fuel, Hash, BadgeCheck,
+  Car, MessageCircle, CheckCircle2, Calculator, Sparkles,
+  ShieldCheck, Clock, Users, FileText, ArrowRight, Gauge,
+  Calendar, Settings2, Fuel, Hash, BadgeCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Header, Footer, FloatingWhatsapp, WHATSAPP, WA_MSG, createWhatsAppLink } from "@/components/site-chrome";
 import heroCar from "@/assets/hero-car.jpg";
 import car1 from "@/assets/car-1.jpg";
 import car2 from "@/assets/car-2.jpg";
 import car3 from "@/assets/car-3.jpg";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
