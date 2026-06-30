@@ -12,30 +12,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Header, Footer, FloatingWhatsapp, WHATSAPP, WA_MSG, createWhatsAppLink } from "@/components/site-chrome";
 import heroCar from "@/assets/hero-car.jpg";
-import car1 from "@/assets/car-1.jpg";
-import car2 from "@/assets/car-2.jpg";
-import car3 from "@/assets/car-3.jpg";
+import { VEHICLES } from "@/data/vehicles";
 
-
-export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Top Veículos — Seu próximo carro começa com a aprovação certa" },
-      { name: "description", content: "Veículos selecionados, financiamento facilitado e atendimento especializado. Simule, aprove e saia de carro novo com a Top Veículos." },
-      { property: "og:title", content: "Top Veículos — Aprovação certa, carro certo" },
-      { property: "og:description", content: "Simulação rápida, parceria com as melhores financeiras e atendimento humanizado." },
-      { property: "og:image", content: heroCar },
-      { name: "twitter:image", content: heroCar },
-    ],
-  }),
-  component: Index,
-});
-
-const VEHICLES = [
-  { img: car1, name: "Hyundai Creta Limited 1.0 Turbo", year: "2023/2023", km: "18.420 km", gear: "Automático", fuel: "Flex", plate: "7", price: "R$ 124.900", parcel: "R$ 1.890", tag: "Mais procurado", pitch: "Ideal para famílias que querem SUV completo com baixa quilometragem." },
-  { img: car2, name: "Hyundai HB20 Comfort Plus 1.0", year: "2022/2023", km: "32.100 km", gear: "Manual", fuel: "Flex", plate: "3", price: "R$ 72.500", parcel: "R$ 1.190", tag: "Entrada baixa", pitch: "Perfeito para o uso diário, econômico e fácil de aprovar." },
-  { img: car3, name: "Infiniti Q50 Sport 3.0 V6", year: "2021/2021", km: "41.800 km", gear: "Automático", fuel: "Gasolina", plate: "1", price: "R$ 189.900", parcel: "R$ 2.890", tag: "Premium", pitch: "Para quem busca conforto, status e desempenho em um sedã premium." },
-];
 
 function Index() {
   return (
