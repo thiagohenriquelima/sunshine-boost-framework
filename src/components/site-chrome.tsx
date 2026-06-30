@@ -67,21 +67,21 @@ export function Header() {
         </button>
       </div>
       {menuOpen && (
-        <div className="lg:hidden border-t border-border bg-background/95 backdrop-blur-xl animate-fade-in">
+        <div className="lg:hidden border-t border-border bg-background/95 backdrop-blur-xl animate-fade-in max-h-[calc(100vh-4rem)] overflow-y-auto">
           <div className="px-4 py-4 flex flex-col gap-1">
             {NAV.map((n) => (
               <Link
                 key={n.to}
                 to={n.to}
                 onClick={() => setMenuOpen(false)}
-                className="px-3 py-3 rounded-md text-sm hover:bg-muted transition-colors"
+                className="px-3 py-3.5 rounded-md text-base hover:bg-muted active:bg-muted transition-colors"
               >
                 {n.label}
               </Link>
             ))}
-            <Button asChild className="mt-3 bg-gradient-red shadow-glow-red">
-              <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
-                <MessageCircle className="h-4 w-4" /> Falar no WhatsApp
+            <Button asChild className="mt-3 bg-gradient-red shadow-glow-red h-12 text-base">
+              <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}>
+                <MessageCircle className="h-5 w-5" /> Falar no WhatsApp
               </a>
             </Button>
           </div>
