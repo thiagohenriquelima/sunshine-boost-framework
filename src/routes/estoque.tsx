@@ -127,15 +127,17 @@ function VehicleCard({ v }: { v: Vehicle }) {
     : "bg-gradient-red shadow-glow-red";
   return (
     <article className="group rounded-2xl overflow-hidden border border-border bg-card hover:border-primary/50 transition-all duration-300 shadow-card-premium hover:-translate-y-1 flex flex-col">
-      <div className="relative aspect-[4/3] overflow-hidden bg-graphite">
+      <Link to="/estoque/$slug" params={{ slug: v.slug }} className="relative aspect-[4/3] overflow-hidden bg-graphite block">
         <img src={v.img} alt={v.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         <div className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-semibold text-primary-foreground ${tagStyle}`}>{v.tag}</div>
         <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-background/80 backdrop-blur text-[10px] font-semibold flex items-center gap-1 border border-border">
           <BadgeCheck className="h-3 w-3 text-accent" /> Procedência
         </div>
-      </div>
+      </Link>
       <div className="p-5 flex flex-col flex-1">
-        <h3 className="font-display font-bold text-lg leading-tight">{v.name}</h3>
+        <Link to="/estoque/$slug" params={{ slug: v.slug }} className="font-display font-bold text-lg leading-tight hover:text-primary transition-colors">
+          {v.name}
+        </Link>
         <p className="mt-1.5 text-xs text-muted-foreground italic">{v.pitch}</p>
         <div className="mt-4 grid grid-cols-2 gap-x-3 gap-y-2 text-xs text-muted-foreground">
           <span className="flex items-center gap-1.5"><Calendar className="h-3.5 w-3.5" />{v.year}</span>
@@ -156,10 +158,10 @@ function VehicleCard({ v }: { v: Vehicle }) {
         </div>
         <div className="mt-4 grid gap-2">
           <Button asChild size="sm" className="bg-gradient-red shadow-glow-red">
-            <Link to="/financiamento"><Calculator className="h-4 w-4" /> Simular este veículo</Link>
+            <Link to="/estoque/$slug" params={{ slug: v.slug }}><Calculator className="h-4 w-4" /> Ver detalhes do veículo</Link>
           </Button>
           <Button asChild size="sm" variant="outline" className="border-border">
-            <a href={createWhatsAppLink(`${WA_MSG.veiculo} (${v.name})`)} target="_blank" rel="noopener noreferrer">
+            <a href={createWhatsAppLink(`Olá, tenho interesse no ${v.name} que vi no site da Top Veículos. Gostaria de saber as condições.`)} target="_blank" rel="noopener noreferrer">
               <MessageCircle className="h-4 w-4" /> Tenho interesse no WhatsApp
             </a>
           </Button>
