@@ -96,7 +96,7 @@ function VehicleDetailPage() {
               </div>
             </div>
             <div className="grid grid-cols-4 gap-3">
-              {v.gallery.map((g, i) => (
+              {v.gallery.map((g: string, i: number) => (
                 <button
                   key={i}
                   onClick={() => setActiveImg(i)}
@@ -164,7 +164,7 @@ function VehicleDetailPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-3 gap-6">
           <Panel title="Diferenciais do veículo" icon={<Sparkles className="h-5 w-5 text-primary" />}>
             <ul className="space-y-2.5">
-              {v.highlights.map((h) => (
+              {v.highlights.map((h: string) => (
                 <li key={h} className="flex items-start gap-2 text-sm">
                   <Check className="h-4 w-4 mt-0.5 text-accent shrink-0" /> {h}
                 </li>
@@ -173,7 +173,7 @@ function VehicleDetailPage() {
           </Panel>
           <Panel title="Itens de série" icon={<BadgeCheck className="h-5 w-5 text-accent" />}>
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-3">
-              {v.features.map((f) => (
+              {v.features.map((f: string) => (
                 <li key={f} className="flex items-start gap-2 text-sm text-muted-foreground">
                   <Check className="h-4 w-4 mt-0.5 text-accent shrink-0" /> {f}
                 </li>
@@ -201,7 +201,7 @@ function VehicleDetailPage() {
               Por que esse veículo <span className="text-gradient-red">vale a pena?</span>
             </h2>
             <div className="relative mt-6 grid sm:grid-cols-2 gap-4">
-              {v.whyWorth.map((w) => (
+              {v.whyWorth.map((w: string) => (
                 <div key={w} className="flex items-start gap-3 rounded-xl border border-border bg-card/60 backdrop-blur p-4">
                   <div className="h-9 w-9 rounded-lg bg-gradient-red grid place-items-center shrink-0 shadow-glow-red">
                     <Sparkles className="h-4 w-4 text-primary-foreground" />
