@@ -460,6 +460,9 @@ function Simulator() {
   const [valor, setValor] = useState(80000);
   const [entrada, setEntrada] = useState(15000);
   const [prazo, setPrazo] = useState(48);
+  const [nome, setNome] = useState("");
+  const [whatsapp, setWhatsapp] = useState("");
+  const [veiculo, setVeiculo] = useState("");
   const financiado = Math.max(valor - entrada, 0);
   const taxa = 0.0179; // estimada
   const parcela = financiado > 0
@@ -467,10 +470,12 @@ function Simulator() {
     : 0;
   const fmt = (n: number) => n.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 });
 
+  const propostaMsg = `Olá, meu nome é ${nome || "[nome]"}. Fiz uma simulação no site da Top Veículos. Tenho interesse no veículo ${veiculo || "[veículo]"}, com entrada de ${fmt(entrada)} e prazo de ${prazo} meses. Parcela estimada: ${fmt(parcela)}. Quero receber uma proposta.${whatsapp ? ` Meu WhatsApp: ${whatsapp}.` : ""}`;
+
   return (
     <section id="financiamento" className="py-16 sm:py-24 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-10 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 items-start">
           <div>
             <div className="text-xs uppercase tracking-widest text-accent font-semibold mb-3">Simulador</div>
             <h2 className="text-3xl sm:text-4xl font-bold">Simule seu financiamento agora</h2>
@@ -507,13 +512,32 @@ function Simulator() {
                 <Stat l="Total estimado" v={fmt(parcela * prazo + entrada)} />
                 <Stat l="Taxa a partir de" v="1,79% a.m." />
               </div>
+
+              <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="sm:col-span-2">
+                  <Label className="text-xs text-muted-foreground">Nome</Label>
+                  <Input value={nome} onChange={(e) => setNome(e.target.value)} maxLength={80} placeholder="Seu nome completo" className="mt-1" />
+                </div>
+                <div>
+                  <Label className="text-xs text-muted-foreground">WhatsApp</Label>
+                  <Input value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} maxLength={20} placeholder="(00) 00000-0000" className="mt-1" />
+                </div>
+                <div>
+                  <Label className="text-xs text-muted-foreground">Veículo de interesse</Label>
+                  <Input value={veiculo} onChange={(e) => setVeiculo(e.target.value)} maxLength={60} placeholder="Ex.: Hyundai HB20" className="mt-1" />
+                </div>
+              </div>
+
               <div className="mt-6 flex flex-col sm:flex-row gap-3">
-                <Button asChild className="bg-gradient-red shadow-glow-red h-11 flex-1">
-                  <a href={createWhatsAppLink(WA_MSG.aprovacao)} target="_blank" rel="noopener noreferrer">
-                    <MessageCircle className="h-4 w-4" /> Aprovar minha simulação
+                <Button asChild className="bg-gradient-red shadow-glow-red h-12 flex-1 text-base font-semibold">
+                  <a href={createWhatsAppLink(propostaMsg)} target="_blank" rel="noopener noreferrer">
+                    <MessageCircle className="h-5 w-5" /> Receber proposta no WhatsApp
                   </a>
                 </Button>
               </div>
+              <p className="mt-4 text-[11px] text-muted-foreground leading-relaxed">
+                Simulação aproximada. A proposta final depende da análise de crédito e condições da financeira.
+              </p>
             </div>
           </div>
         </div>
