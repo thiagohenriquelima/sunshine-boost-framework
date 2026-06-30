@@ -3,7 +3,7 @@ import { useState } from "react";
 import {
   Car, Phone, MessageCircle, CheckCircle2, Calculator, Sparkles,
   ShieldCheck, Clock, Users, FileText, ArrowRight, Star, Gauge,
-  Calendar, Settings2, Menu, X,
+  Calendar, Settings2, Menu, X, Fuel, Hash, BadgeCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -52,9 +52,9 @@ const NAV = [
 ];
 
 const VEHICLES = [
-  { img: car1, name: "Hyundai Creta Limited", year: "2023", km: "18.420 km", gear: "Automático", price: "R$ 124.900", tag: "Destaque" },
-  { img: car2, name: "Hyundai HB20 Comfort", year: "2022", km: "32.100 km", gear: "Manual", price: "R$ 72.500", tag: "Entrada baixa" },
-  { img: car3, name: "Infiniti Q50 Sport", year: "2021", km: "41.800 km", gear: "Automático", price: "R$ 189.900", tag: "Premium" },
+  { img: car1, name: "Hyundai Creta Limited 1.0 Turbo", year: "2023/2023", km: "18.420 km", gear: "Automático", fuel: "Flex", plate: "7", price: "R$ 124.900", parcel: "R$ 1.890", tag: "Mais procurado", pitch: "Ideal para famílias que querem SUV completo com baixa quilometragem." },
+  { img: car2, name: "Hyundai HB20 Comfort Plus 1.0", year: "2022/2023", km: "32.100 km", gear: "Manual", fuel: "Flex", plate: "3", price: "R$ 72.500", parcel: "R$ 1.190", tag: "Entrada baixa", pitch: "Perfeito para o uso diário, econômico e fácil de aprovar." },
+  { img: car3, name: "Infiniti Q50 Sport 3.0 V6", year: "2021/2021", km: "41.800 km", gear: "Automático", fuel: "Gasolina", plate: "1", price: "R$ 189.900", parcel: "R$ 2.890", tag: "Premium", pitch: "Para quem busca conforto, status e desempenho em um sedã premium." },
 ];
 
 function Index() {
@@ -364,40 +364,60 @@ function Vehicles() {
           </Button>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {VEHICLES.map((v) => (
-            <article key={v.name} className="group rounded-2xl overflow-hidden border border-border bg-card hover:border-primary/50 transition-all duration-300 shadow-card-premium hover:-translate-y-1">
+          {VEHICLES.map((v) => {
+            const tagStyle =
+              v.tag === "Premium" ? "bg-gradient-blue shadow-glow-blue"
+              : v.tag === "Entrada baixa" ? "bg-accent shadow-glow-blue"
+              : v.tag === "Oportunidade" ? "bg-gradient-blue shadow-glow-blue"
+              : "bg-gradient-red shadow-glow-red";
+            return (
+            <article key={v.name} className="group rounded-2xl overflow-hidden border border-border bg-card hover:border-primary/50 transition-all duration-300 shadow-card-premium hover:-translate-y-1 flex flex-col">
               <div className="relative aspect-[4/3] overflow-hidden bg-graphite">
                 <img src={v.img} alt={v.name} width={1024} height={768} loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-gradient-red text-xs font-semibold text-primary-foreground shadow-glow-red">
+                <div className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-semibold text-primary-foreground ${tagStyle}`}>
                   {v.tag}
                 </div>
+                <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-background/80 backdrop-blur text-[10px] font-semibold flex items-center gap-1 border border-border">
+                  <BadgeCheck className="h-3 w-3 text-accent" /> Procedência
+                </div>
               </div>
-              <div className="p-5">
-                <h3 className="font-display font-bold text-lg">{v.name}</h3>
-                <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-muted-foreground">
+              <div className="p-5 flex flex-col flex-1">
+                <h3 className="font-display font-bold text-lg leading-tight">{v.name}</h3>
+                <p className="mt-1.5 text-xs text-muted-foreground italic">{v.pitch}</p>
+                <div className="mt-4 grid grid-cols-2 gap-x-3 gap-y-2 text-xs text-muted-foreground">
                   <span className="flex items-center gap-1.5"><Calendar className="h-3.5 w-3.5" />{v.year}</span>
                   <span className="flex items-center gap-1.5"><Gauge className="h-3.5 w-3.5" />{v.km}</span>
                   <span className="flex items-center gap-1.5"><Settings2 className="h-3.5 w-3.5" />{v.gear}</span>
+                  <span className="flex items-center gap-1.5"><Fuel className="h-3.5 w-3.5" />{v.fuel}</span>
+                  <span className="flex items-center gap-1.5 col-span-2"><Hash className="h-3.5 w-3.5" />Final de placa {v.plate}</span>
                 </div>
-                <div className="mt-4 pt-4 border-t border-border flex items-baseline justify-between">
+                <div className="mt-4 pt-4 border-t border-border flex items-end justify-between">
                   <div>
-                    <div className="text-xs text-muted-foreground">A partir de</div>
+                    <div className="text-[10px] uppercase tracking-wider text-muted-foreground">A partir de</div>
                     <div className="text-2xl font-display font-bold text-gradient-red">{v.price}</div>
                   </div>
+                  <div className="text-right">
+                    <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Parcela estimada</div>
+                    <div className="text-sm font-semibold">{v.parcel}<span className="text-muted-foreground font-normal">/mês</span></div>
+                  </div>
                 </div>
-                <div className="mt-4 grid grid-cols-2 gap-2">
+                <div className="mt-4 grid gap-2">
                   <Button asChild size="sm" className="bg-gradient-red shadow-glow-red">
-                    <a href="#financiamento"><Calculator className="h-4 w-4" /> Simular</a>
+                    <a href="#financiamento"><Calculator className="h-4 w-4" /> Simular este veículo</a>
                   </Button>
                   <Button asChild size="sm" variant="outline" className="border-border">
-                    <a href={createWhatsAppLink(`${WA_MSG.veiculo} (${v.name})`)} target="_blank" rel="noopener noreferrer"><MessageCircle className="h-4 w-4" /> WhatsApp</a>
+                    <a href={createWhatsAppLink(`${WA_MSG.veiculo} (${v.name})`)} target="_blank" rel="noopener noreferrer"><MessageCircle className="h-4 w-4" /> Tenho interesse no WhatsApp</a>
                   </Button>
                 </div>
               </div>
             </article>
-          ))}
+          );})}
         </div>
+        <p className="mt-8 text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
+          <ShieldCheck className="h-4 w-4 text-accent" />
+          Todos os veículos passam por análise de procedência e podem ser simulados com nossa equipe.
+        </p>
       </div>
     </section>
   );
