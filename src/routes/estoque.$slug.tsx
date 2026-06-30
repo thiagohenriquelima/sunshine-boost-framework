@@ -67,7 +67,11 @@ const simulateMsg = (v: Vehicle, entrada: string, prazo: string) =>
   `Olá, quero simular o financiamento do ${v.name} (${v.price}) com entrada de ${entrada || "a combinar"} e prazo de ${prazo} meses. Vim pelo site da Top Veículos.`;
 
 function VehicleDetailPage() {
-  const { vehicle: v } = Route.useLoaderData();
+  const { vehicle } = Route.useLoaderData();
+  return <VehicleDetailView vehicle={vehicle} />;
+}
+
+export function VehicleDetailView({ vehicle: v }: { vehicle: Vehicle }) {
   const [activeImg, setActiveImg] = useState(0);
 
   const similar = useMemo(
