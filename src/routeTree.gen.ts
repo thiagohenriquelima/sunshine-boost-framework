@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as FinanciamentoRouteImport } from './routes/financiamento'
 import { Route as EstoqueRouteImport } from './routes/estoque'
+import { Route as ClientesAprovadosRouteImport } from './routes/clientes-aprovados'
 import { Route as AvalieSeuUsadoRouteImport } from './routes/avalie-seu-usado'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -22,6 +23,11 @@ const FinanciamentoRoute = FinanciamentoRouteImport.update({
 const EstoqueRoute = EstoqueRouteImport.update({
   id: '/estoque',
   path: '/estoque',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClientesAprovadosRoute = ClientesAprovadosRouteImport.update({
+  id: '/clientes-aprovados',
+  path: '/clientes-aprovados',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AvalieSeuUsadoRoute = AvalieSeuUsadoRouteImport.update({
@@ -38,12 +44,14 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/avalie-seu-usado': typeof AvalieSeuUsadoRoute
+  '/clientes-aprovados': typeof ClientesAprovadosRoute
   '/estoque': typeof EstoqueRoute
   '/financiamento': typeof FinanciamentoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/avalie-seu-usado': typeof AvalieSeuUsadoRoute
+  '/clientes-aprovados': typeof ClientesAprovadosRoute
   '/estoque': typeof EstoqueRoute
   '/financiamento': typeof FinanciamentoRoute
 }
@@ -51,20 +59,38 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/avalie-seu-usado': typeof AvalieSeuUsadoRoute
+  '/clientes-aprovados': typeof ClientesAprovadosRoute
   '/estoque': typeof EstoqueRoute
   '/financiamento': typeof FinanciamentoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/avalie-seu-usado' | '/estoque' | '/financiamento'
+  fullPaths:
+    | '/'
+    | '/avalie-seu-usado'
+    | '/clientes-aprovados'
+    | '/estoque'
+    | '/financiamento'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/avalie-seu-usado' | '/estoque' | '/financiamento'
-  id: '__root__' | '/' | '/avalie-seu-usado' | '/estoque' | '/financiamento'
+  to:
+    | '/'
+    | '/avalie-seu-usado'
+    | '/clientes-aprovados'
+    | '/estoque'
+    | '/financiamento'
+  id:
+    | '__root__'
+    | '/'
+    | '/avalie-seu-usado'
+    | '/clientes-aprovados'
+    | '/estoque'
+    | '/financiamento'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AvalieSeuUsadoRoute: typeof AvalieSeuUsadoRoute
+  ClientesAprovadosRoute: typeof ClientesAprovadosRoute
   EstoqueRoute: typeof EstoqueRoute
   FinanciamentoRoute: typeof FinanciamentoRoute
 }
@@ -83,6 +109,13 @@ declare module '@tanstack/react-router' {
       path: '/estoque'
       fullPath: '/estoque'
       preLoaderRoute: typeof EstoqueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/clientes-aprovados': {
+      id: '/clientes-aprovados'
+      path: '/clientes-aprovados'
+      fullPath: '/clientes-aprovados'
+      preLoaderRoute: typeof ClientesAprovadosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/avalie-seu-usado': {
@@ -105,6 +138,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AvalieSeuUsadoRoute: AvalieSeuUsadoRoute,
+  ClientesAprovadosRoute: ClientesAprovadosRoute,
   EstoqueRoute: EstoqueRoute,
   FinanciamentoRoute: FinanciamentoRoute,
 }
