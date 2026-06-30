@@ -14,6 +14,7 @@ import { Route as EstoqueRouteImport } from './routes/estoque'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as ClientesAprovadosRouteImport } from './routes/clientes-aprovados'
 import { Route as AvalieSeuUsadoRouteImport } from './routes/avalie-seu-usado'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as VeiculoSlugRouteImport } from './routes/veiculo.$slug'
 import { Route as EstoqueSlugRouteImport } from './routes/estoque.$slug'
 
@@ -42,6 +43,11 @@ const AvalieSeuUsadoRoute = AvalieSeuUsadoRouteImport.update({
   path: '/avalie-seu-usado',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VeiculoSlugRoute = VeiculoSlugRouteImport.update({
   id: '/veiculo/$slug',
   path: '/veiculo/$slug',
@@ -54,6 +60,7 @@ const EstoqueSlugRoute = EstoqueSlugRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
   '/avalie-seu-usado': typeof AvalieSeuUsadoRoute
   '/clientes-aprovados': typeof ClientesAprovadosRoute
   '/contato': typeof ContatoRoute
@@ -63,6 +70,7 @@ export interface FileRoutesByFullPath {
   '/veiculo/$slug': typeof VeiculoSlugRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/avalie-seu-usado': typeof AvalieSeuUsadoRoute
   '/clientes-aprovados': typeof ClientesAprovadosRoute
   '/contato': typeof ContatoRoute
@@ -73,6 +81,7 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
   '/avalie-seu-usado': typeof AvalieSeuUsadoRoute
   '/clientes-aprovados': typeof ClientesAprovadosRoute
   '/contato': typeof ContatoRoute
@@ -84,6 +93,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/avalie-seu-usado'
     | '/clientes-aprovados'
     | '/contato'
@@ -93,6 +103,7 @@ export interface FileRouteTypes {
     | '/veiculo/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | '/avalie-seu-usado'
     | '/clientes-aprovados'
     | '/contato'
@@ -102,6 +113,7 @@ export interface FileRouteTypes {
     | '/veiculo/$slug'
   id:
     | '__root__'
+    | '/'
     | '/avalie-seu-usado'
     | '/clientes-aprovados'
     | '/contato'
@@ -112,6 +124,7 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
   AvalieSeuUsadoRoute: typeof AvalieSeuUsadoRoute
   ClientesAprovadosRoute: typeof ClientesAprovadosRoute
   ContatoRoute: typeof ContatoRoute
@@ -157,6 +170,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AvalieSeuUsadoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/veiculo/$slug': {
       id: '/veiculo/$slug'
       path: '/veiculo/$slug'
@@ -186,6 +206,7 @@ const EstoqueRouteWithChildren =
   EstoqueRoute._addFileChildren(EstoqueRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   AvalieSeuUsadoRoute: AvalieSeuUsadoRoute,
   ClientesAprovadosRoute: ClientesAprovadosRoute,
   ContatoRoute: ContatoRoute,
