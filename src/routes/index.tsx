@@ -52,9 +52,9 @@ const NAV = [
 ];
 
 const VEHICLES = [
-  { img: car1, name: "Hyundai Creta Limited", year: "2023", km: "18.420 km", gear: "Automático", price: "R$ 124.900", tag: "Destaque" },
-  { img: car2, name: "Hyundai HB20 Comfort", year: "2022", km: "32.100 km", gear: "Manual", price: "R$ 72.500", tag: "Entrada baixa" },
-  { img: car3, name: "Infiniti Q50 Sport", year: "2021", km: "41.800 km", gear: "Automático", price: "R$ 189.900", tag: "Premium" },
+  { img: car1, name: "Hyundai Creta Limited 1.0 Turbo", year: "2023/2023", km: "18.420 km", gear: "Automático", fuel: "Flex", plate: "7", price: "R$ 124.900", parcel: "R$ 1.890", tag: "Mais procurado", pitch: "Ideal para famílias que querem SUV completo com baixa quilometragem." },
+  { img: car2, name: "Hyundai HB20 Comfort Plus 1.0", year: "2022/2023", km: "32.100 km", gear: "Manual", fuel: "Flex", plate: "3", price: "R$ 72.500", parcel: "R$ 1.190", tag: "Entrada baixa", pitch: "Perfeito para o uso diário, econômico e fácil de aprovar." },
+  { img: car3, name: "Infiniti Q50 Sport 3.0 V6", year: "2021/2021", km: "41.800 km", gear: "Automático", fuel: "Gasolina", plate: "1", price: "R$ 189.900", parcel: "R$ 2.890", tag: "Premium", pitch: "Para quem busca conforto, status e desempenho em um sedã premium." },
 ];
 
 function Index() {
