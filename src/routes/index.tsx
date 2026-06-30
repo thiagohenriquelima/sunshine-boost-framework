@@ -41,15 +41,17 @@ function Index() {
   return (
     <div id="inicio" className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Header />
-      <Hero />
-      <FindCar />
-      <Vehicles />
-      <Advantages />
-      <Simulator />
-      <Trade />
-      <Testimonials />
-      <Faq />
-      <FinalCta />
+      <main className="pt-16 pb-28 sm:pb-0">
+        <Hero />
+        <FindCar />
+        <Vehicles />
+        <Advantages />
+        <Simulator />
+        <Trade />
+        <Testimonials />
+        <Faq />
+        <FinalCta />
+      </main>
       <Footer />
       <FloatingWhatsapp />
     </div>
