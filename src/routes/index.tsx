@@ -630,36 +630,3 @@ function FinalCta() {
   );
 }
 
-function Footer() {
-  return (
-    <footer className="border-t border-border py-10 bg-graphite/40">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-        <div className="flex items-center gap-2">
-          <div className="h-7 w-7 rounded-md bg-gradient-red grid place-items-center"><Car className="h-4 w-4 text-primary-foreground" /></div>
-          <span className="font-display font-bold text-foreground">Top Veículos</span>
-          <span className="hidden sm:inline">· Aprovação certa, carro certo.</span>
-        </div>
-        <div className="flex items-center gap-5">
-          <a href="#estoque" className="hover:text-foreground">Estoque</a>
-          <a href="#financiamento" className="hover:text-foreground">Financiamento</a>
-          <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className="hover:text-foreground flex items-center gap-1">
-            <Phone className="h-3.5 w-3.5" /> Contato
-          </a>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
-function FloatingWhatsapp() {
-  return (
-    <a href={WHATSAPP} target="_blank" rel="noopener noreferrer"
-      className="fixed bottom-5 right-5 z-50 group">
-      <span className="absolute inset-0 rounded-full bg-[var(--whatsapp)] opacity-30 blur-xl animate-pulse" />
-      <span className="relative flex items-center gap-2 h-14 px-5 rounded-full bg-[var(--whatsapp)] text-white font-semibold shadow-[0_10px_30px_-5px_oklch(0.7_0.18_150/0.6)] hover:scale-105 transition-transform">
-        <MessageCircle className="h-6 w-6" />
-        <span className="hidden sm:inline">Falar no WhatsApp</span>
-      </span>
-    </a>
-  );
-}
