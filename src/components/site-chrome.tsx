@@ -135,7 +135,7 @@ export function PageShell({ children }: { children: ReactNode }) {
   );
 }
 
-export function PageHero({ eyebrow, title, subtitle }: { eyebrow: string; title: ReactNode; subtitle: string }) {
+export function PageHero({ eyebrow, title, subtitle }: { eyebrow: ReactNode; title: ReactNode; subtitle: string }) {
   return (
     <section className="relative pt-16 pb-12 sm:pt-24 sm:pb-16 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-hero" />
