@@ -64,30 +64,30 @@ function Index() {
 
 function Hero() {
   return (
-    <section className="relative pt-28 pb-16 sm:pt-36 sm:pb-24 overflow-hidden">
+    <section className="relative pt-24 pb-12 sm:pt-36 sm:pb-24 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-hero" />
       <div className="absolute top-20 -right-32 h-96 w-96 rounded-full bg-primary/20 blur-3xl" />
       <div className="absolute bottom-0 -left-32 h-96 w-96 rounded-full bg-accent/20 blur-3xl" />
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-10 sm:gap-12 items-center">
         <div className="animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-card border border-border text-xs font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-card border border-border text-[11px] sm:text-xs font-medium mb-5">
             <Sparkles className="h-3.5 w-3.5 text-primary" />
-            Aprovação inteligente · +12 financeiras parceiras
+            <span className="truncate">Aprovação inteligente · +12 financeiras</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.05] tracking-tight">
+          <h1 className="text-[32px] sm:text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight text-balance">
             Seu próximo carro começa com a <span className="text-gradient-red">aprovação certa</span>
           </h1>
-          <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-xl leading-relaxed">
+          <p className="mt-4 sm:mt-5 text-[15px] sm:text-lg text-muted-foreground max-w-xl leading-relaxed">
             Veículos selecionados, financiamento facilitado e atendimento especializado para você sair de carro novo com segurança.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button asChild size="lg" className="bg-gradient-red shadow-glow-red hover:opacity-90 h-12 px-6">
+          <div className="mt-7 sm:mt-8 flex flex-col sm:flex-row sm:flex-wrap gap-3">
+            <Button asChild size="lg" className="bg-gradient-red shadow-glow-red hover:opacity-90 h-12 px-6 w-full sm:w-auto">
               <Link to="/financiamento"><Calculator className="h-5 w-5" /> Simular financiamento</Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="h-12 px-6 border-border bg-card/50 backdrop-blur">
+            <Button asChild size="lg" variant="outline" className="h-12 px-6 border-border bg-card/50 backdrop-blur w-full sm:w-auto">
               <Link to="/estoque"><Car className="h-5 w-5" /> Ver veículos</Link>
             </Button>
-            <Button asChild size="lg" variant="ghost" className="h-12 px-6 text-foreground hover:bg-muted">
+            <Button asChild size="lg" variant="ghost" className="h-12 px-6 text-foreground hover:bg-muted w-full sm:w-auto">
               <a href={WHATSAPP} target="_blank" rel="noopener noreferrer"><MessageCircle className="h-5 w-5" /> WhatsApp</a>
             </Button>
           </div>
