@@ -6,9 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { PageShell, PageHero, createWhatsAppLink, WA_MSG } from "@/components/site-chrome";
-import car1 from "@/assets/car-1.jpg";
-import car2 from "@/assets/car-2.jpg";
-import car3 from "@/assets/car-3.jpg";
+import { VEHICLES, type Vehicle } from "@/data/vehicles";
 
 export const Route = createFileRoute("/estoque")({
   head: () => ({
@@ -22,20 +20,7 @@ export const Route = createFileRoute("/estoque")({
   component: EstoquePage,
 });
 
-type Vehicle = {
-  img: string; name: string; brand: string; type: string; year: string; yearNum: number;
-  km: string; gear: string; fuel: string; plate: string; price: string; priceNum: number;
-  parcel: string; tag: string; pitch: string;
-};
-
-const STOCK: Vehicle[] = [
-  { img: car1, name: "Hyundai Creta Limited 1.0 Turbo", brand: "Hyundai", type: "SUV", year: "2023/2023", yearNum: 2023, km: "18.420 km", gear: "Automático", fuel: "Flex", plate: "7", price: "R$ 124.900", priceNum: 124900, parcel: "R$ 1.890", tag: "Mais procurado", pitch: "SUV completo, ideal para família." },
-  { img: car2, name: "Hyundai HB20 Comfort Plus 1.0", brand: "Hyundai", type: "Hatch", year: "2022/2023", yearNum: 2022, km: "32.100 km", gear: "Manual", fuel: "Flex", plate: "3", price: "R$ 72.500", priceNum: 72500, parcel: "R$ 1.190", tag: "Entrada baixa", pitch: "Econômico, fácil de aprovar." },
-  { img: car3, name: "Infiniti Q50 Sport 3.0 V6", brand: "Infiniti", type: "Sedan", year: "2021/2021", yearNum: 2021, km: "41.800 km", gear: "Automático", fuel: "Gasolina", plate: "1", price: "R$ 189.900", priceNum: 189900, parcel: "R$ 2.890", tag: "Premium", pitch: "Conforto, status e desempenho premium." },
-  { img: car1, name: "Hyundai Creta Action 1.6", brand: "Hyundai", type: "SUV", year: "2022/2022", yearNum: 2022, km: "39.800 km", gear: "Automático", fuel: "Flex", plate: "5", price: "R$ 108.900", priceNum: 108900, parcel: "R$ 1.690", tag: "Oportunidade", pitch: "SUV versátil com ótimo custo-benefício." },
-  { img: car2, name: "Hyundai HB20 Sense 1.0", brand: "Hyundai", type: "Hatch", year: "2023/2024", yearNum: 2023, km: "12.500 km", gear: "Manual", fuel: "Flex", plate: "9", price: "R$ 78.900", priceNum: 78900, parcel: "R$ 1.290", tag: "Mais procurado", pitch: "Quase zero, baixa quilometragem." },
-  { img: car3, name: "Infiniti Q50 Luxe 2.0 Turbo", brand: "Infiniti", type: "Sedan", year: "2020/2020", yearNum: 2020, km: "58.200 km", gear: "Automático", fuel: "Gasolina", plate: "4", price: "R$ 159.900", priceNum: 159900, parcel: "R$ 2.490", tag: "Premium", pitch: "Sedã luxo com pacote completo." },
-];
+const STOCK = VEHICLES;
 
 function EstoquePage() {
   const [brand, setBrand] = useState<string>("all");
