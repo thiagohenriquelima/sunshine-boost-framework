@@ -31,28 +31,6 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const WHATSAPP_NUMBER = "5583981089495";
-const createWhatsAppLink = (msg: string) =>
-  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
-const WA_MSG = {
-  hero: "Olá, vim pelo site da Top Veículos e quero encontrar meu próximo carro.",
-  simulacao: "Olá, vim pelo site da Top Veículos e quero fazer uma simulação de financiamento.",
-  veiculo: "Olá, tenho interesse neste veículo e gostaria de saber as condições.",
-  avaliacao: "Olá, quero avaliar meu usado para dar como entrada na troca.",
-  aprovacao: "Olá, quero tentar minha aprovação para comprar um carro.",
-  cta: "Olá, quero falar com um consultor da Top Veículos.",
-};
-const WHATSAPP = createWhatsAppLink(WA_MSG.hero);
-
-const NAV = [
-  { label: "Início", href: "#inicio" },
-  { label: "Estoque", href: "#estoque" },
-  { label: "Financiamento", href: "#financiamento" },
-  { label: "Avalie seu usado", href: "#avaliacao" },
-  { label: "Clientes aprovados", href: "#depoimentos" },
-  { label: "Contato", href: "#contato" },
-];
-
 const VEHICLES = [
   { img: car1, name: "Hyundai Creta Limited 1.0 Turbo", year: "2023/2023", km: "18.420 km", gear: "Automático", fuel: "Flex", plate: "7", price: "R$ 124.900", parcel: "R$ 1.890", tag: "Mais procurado", pitch: "Ideal para famílias que querem SUV completo com baixa quilometragem." },
   { img: car2, name: "Hyundai HB20 Comfort Plus 1.0", year: "2022/2023", km: "32.100 km", gear: "Manual", fuel: "Flex", plate: "3", price: "R$ 72.500", parcel: "R$ 1.190", tag: "Entrada baixa", pitch: "Perfeito para o uso diário, econômico e fácil de aprovar." },
@@ -60,11 +38,9 @@ const VEHICLES = [
 ];
 
 function Index() {
-  const [menuOpen, setMenuOpen] = useState(false);
-
   return (
     <div id="inicio" className="min-h-screen bg-background text-foreground overflow-x-hidden">
-      <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+      <Header />
       <Hero />
       <FindCar />
       <Vehicles />
@@ -79,6 +55,7 @@ function Index() {
     </div>
   );
 }
+
 
 function Header({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: (v: boolean) => void }) {
   return (
