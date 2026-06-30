@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Star, MessageCircle, BadgeCheck, Quote } from "lucide-react";
+import { Star, MessageCircle, BadgeCheck, Quote, MapPin, Calendar, Camera, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PageShell, PageHero, createWhatsAppLink, WA_MSG } from "@/components/site-chrome";
 
