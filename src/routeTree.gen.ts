@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as FinanciamentoRouteImport } from './routes/financiamento'
 import { Route as EstoqueRouteImport } from './routes/estoque'
+import { Route as AvalieSeuUsadoRouteImport } from './routes/avalie-seu-usado'
 import { Route as IndexRouteImport } from './routes/index'
 
 const FinanciamentoRoute = FinanciamentoRouteImport.update({
@@ -23,6 +24,11 @@ const EstoqueRoute = EstoqueRouteImport.update({
   path: '/estoque',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AvalieSeuUsadoRoute = AvalieSeuUsadoRouteImport.update({
+  id: '/avalie-seu-usado',
+  path: '/avalie-seu-usado',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,30 +37,34 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/avalie-seu-usado': typeof AvalieSeuUsadoRoute
   '/estoque': typeof EstoqueRoute
   '/financiamento': typeof FinanciamentoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/avalie-seu-usado': typeof AvalieSeuUsadoRoute
   '/estoque': typeof EstoqueRoute
   '/financiamento': typeof FinanciamentoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/avalie-seu-usado': typeof AvalieSeuUsadoRoute
   '/estoque': typeof EstoqueRoute
   '/financiamento': typeof FinanciamentoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/estoque' | '/financiamento'
+  fullPaths: '/' | '/avalie-seu-usado' | '/estoque' | '/financiamento'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/estoque' | '/financiamento'
-  id: '__root__' | '/' | '/estoque' | '/financiamento'
+  to: '/' | '/avalie-seu-usado' | '/estoque' | '/financiamento'
+  id: '__root__' | '/' | '/avalie-seu-usado' | '/estoque' | '/financiamento'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AvalieSeuUsadoRoute: typeof AvalieSeuUsadoRoute
   EstoqueRoute: typeof EstoqueRoute
   FinanciamentoRoute: typeof FinanciamentoRoute
 }
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EstoqueRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/avalie-seu-usado': {
+      id: '/avalie-seu-usado'
+      path: '/avalie-seu-usado'
+      fullPath: '/avalie-seu-usado'
+      preLoaderRoute: typeof AvalieSeuUsadoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AvalieSeuUsadoRoute: AvalieSeuUsadoRoute,
   EstoqueRoute: EstoqueRoute,
   FinanciamentoRoute: FinanciamentoRoute,
 }
