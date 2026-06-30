@@ -44,6 +44,7 @@ export const Route = createFileRoute("/estoque/$slug")({
   component: VehicleDetailPage,
 });
 
+export { NotFoundVehicle };
 function NotFoundVehicle() {
   return (
     <PageShell>
