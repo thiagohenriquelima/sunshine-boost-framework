@@ -41,7 +41,7 @@ function Index() {
   return (
     <div id="inicio" className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Header />
-      <main className="pt-16 pb-28 sm:pb-0">
+      <main className="pb-28 sm:pb-0">
         <Hero />
         <FindCar />
         <Vehicles />
