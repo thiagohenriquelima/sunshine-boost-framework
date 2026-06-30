@@ -170,7 +170,7 @@ function FindCar() {
           <h2 className="text-3xl sm:text-4xl font-bold">Encontre o carro ideal para você</h2>
           <p className="mt-3 text-muted-foreground">Responda em segundos e veja opções com parcela que cabe no seu bolso.</p>
         </div>
-        <div className="rounded-3xl border border-border bg-card/60 backdrop-blur p-6 sm:p-10 shadow-card-premium">
+        <div className="rounded-3xl border border-border bg-card/60 backdrop-blur p-5 sm:p-10 shadow-card-premium">
           <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-5">
             {[
               { label: "Orçamento total", placeholder: "R$ 80.000" },
