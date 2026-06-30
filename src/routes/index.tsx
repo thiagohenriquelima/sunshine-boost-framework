@@ -29,7 +29,18 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const WHATSAPP = "https://wa.me/5500000000000?text=Olá,%20vim%20pelo%20site%20da%20Top%20Veículos";
+const WHATSAPP_NUMBER = "5583981089495";
+const wa = (msg: string) =>
+  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+const WA_MSG = {
+  hero: "Olá, vim pelo site da Top Veículos e quero encontrar meu próximo carro.",
+  simulacao: "Olá, vim pelo site da Top Veículos e quero fazer uma simulação de financiamento.",
+  veiculo: "Olá, tenho interesse neste veículo e gostaria de saber as condições.",
+  avaliacao: "Olá, quero avaliar meu usado para dar como entrada na troca.",
+  aprovacao: "Olá, quero tentar minha aprovação para comprar um carro.",
+  cta: "Olá, quero falar com um consultor da Top Veículos.",
+};
+const WHATSAPP = wa(WA_MSG.hero);
 
 const NAV = [
   { label: "Início", href: "#inicio" },
