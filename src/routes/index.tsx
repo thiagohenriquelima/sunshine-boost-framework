@@ -192,7 +192,43 @@ function Hero() {
   );
 }
 
+const RECOMMENDATIONS = [
+  {
+    name: "Hyundai HB20 Comfort",
+    reason: "Equilibrio entre preço, economia e revenda — encaixa na sua parcela ideal.",
+    parcela: "R$ 1.290",
+    profile: "Economia",
+    profileTone: "bg-brand-blue/15 text-brand-blue border-brand-blue/30",
+  },
+  {
+    name: "Hyundai Creta Limited",
+    reason: "SUV espaçoso para família, com conforto e segurança para o dia a dia.",
+    parcela: "R$ 1.890",
+    profile: "Família",
+    profileTone: "bg-primary/15 text-primary border-primary/30",
+  },
+  {
+    name: "Infiniti Q50 Sport",
+    reason: "Para quem busca conforto premium e performance sem abrir mão de status.",
+    parcela: "R$ 2.690",
+    profile: "Conforto",
+    profileTone: "bg-foreground/10 text-foreground border-foreground/20",
+  },
+];
+
 function FindCar() {
+  const [showResults, setShowResults] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleGenerate = () => {
+    setLoading(true);
+    setShowResults(false);
+    setTimeout(() => {
+      setLoading(false);
+      setShowResults(true);
+    }, 900);
+  };
+
   return (
     <section className="py-16 sm:py-24 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -238,11 +274,13 @@ function FindCar() {
               </Select>
             </div>
           </div>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button asChild size="lg" className="bg-gradient-red shadow-glow-red h-12 px-6">
-              <a href={createWhatsAppLink(WA_MSG.simulacao)} target="_blank" rel="noopener noreferrer">
-                <Sparkles className="h-5 w-5" /> Encontrar meu carro
-              </a>
+          <p className="mt-6 text-sm text-muted-foreground flex items-start gap-2">
+            <Sparkles className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+            Nossa inteligência cruza seu orçamento, entrada, parcela ideal e objetivo de uso para indicar as melhores opções.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Button size="lg" onClick={handleGenerate} className="bg-gradient-red shadow-glow-red h-12 px-6">
+              <Sparkles className="h-5 w-5" /> {loading ? "Analisando perfil..." : "Encontrar meu carro"}
             </Button>
             <Button asChild size="lg" variant="outline" className="h-12 px-6 border-border">
               <a href={createWhatsAppLink(WA_MSG.simulacao)} target="_blank" rel="noopener noreferrer">
@@ -250,6 +288,61 @@ function FindCar() {
               </a>
             </Button>
           </div>
+
+          {(loading || showResults) && (
+            <div className="mt-10 pt-10 border-t border-border">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="relative">
+                  <Sparkles className="h-5 w-5 text-primary" />
+                  {loading && <span className="absolute inset-0 animate-ping"><Sparkles className="h-5 w-5 text-primary opacity-60" /></span>}
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold">Recomendações inteligentes</h3>
+              </div>
+              <p className="text-sm text-muted-foreground mb-6">
+                {loading ? "Cruzando seu perfil com nosso estoque..." : "3 opções selecionadas para o seu perfil."}
+              </p>
+
+              {loading ? (
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {[0, 1, 2].map((i) => (
+                    <div key={i} className="h-56 rounded-2xl border border-border bg-background/40 animate-pulse" />
+                  ))}
+                </div>
+              ) : (
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {RECOMMENDATIONS.map((r, i) => (
+                    <article
+                      key={r.name}
+                      className="group rounded-2xl border border-border bg-background/60 p-5 hover:border-primary/50 transition-all duration-300 shadow-card-premium hover:-translate-y-1 animate-in fade-in slide-in-from-bottom-2"
+                      style={{ animationDelay: `${i * 100}ms` }}
+                    >
+                      <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[11px] font-semibold ${r.profileTone}`}>
+                        <Sparkles className="h-3 w-3" /> {r.profile}
+                      </div>
+                      <h4 className="mt-3 font-display font-bold text-lg leading-tight">{r.name}</h4>
+                      <p className="mt-2 text-sm text-muted-foreground">{r.reason}</p>
+                      <div className="mt-4 pt-4 border-t border-border">
+                        <div className="text-xs text-muted-foreground">Parcela estimada</div>
+                        <div className="text-xl font-bold text-primary">{r.parcela}<span className="text-xs text-muted-foreground font-normal">/mês</span></div>
+                      </div>
+                      <div className="mt-4 flex flex-col gap-2">
+                        <Button asChild size="sm" className="bg-gradient-red shadow-glow-red w-full">
+                          <a href={createWhatsAppLink(`Olá, quero esse perfil de carro: ${r.name} (${r.profile}).`)} target="_blank" rel="noopener noreferrer">
+                            Quero esse perfil de carro
+                          </a>
+                        </Button>
+                        <Button asChild size="sm" variant="outline" className="w-full border-border">
+                          <a href={createWhatsAppLink(WA_MSG.cta)} target="_blank" rel="noopener noreferrer">
+                            <MessageCircle className="h-4 w-4" /> Falar com consultor
+                          </a>
+                        </Button>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </section>
