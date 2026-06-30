@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   Car, MessageCircle, CheckCircle2, Calculator, Sparkles,
-  ShieldCheck, Clock, Users, FileText, ArrowRight, Gauge,
+  ShieldCheck, Clock, Users, FileText, ArrowRight, Star, Gauge,
   Calendar, Settings2, Fuel, Hash, BadgeCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
