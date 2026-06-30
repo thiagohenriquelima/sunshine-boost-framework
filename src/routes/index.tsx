@@ -15,6 +15,10 @@ import heroCar from "@/assets/hero-car.jpg";
 import { VEHICLES } from "@/data/vehicles";
 
 
+export const Route = createFileRoute("/")({
+  component: Index,
+});
+
 function Index() {
   return (
     <div id="inicio" className="min-h-screen bg-background text-foreground overflow-x-hidden">
