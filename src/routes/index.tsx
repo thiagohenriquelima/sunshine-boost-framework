@@ -433,9 +433,9 @@ function Simulator() {
           </div>
           <div className="relative">
             <div className="absolute -inset-6 bg-gradient-blue opacity-20 blur-3xl rounded-3xl" />
-            <div className="relative rounded-3xl border border-border bg-card p-8 shadow-card-premium">
+            <div className="relative rounded-3xl border border-border bg-card p-6 sm:p-8 shadow-card-premium">
               <div className="text-sm text-muted-foreground">Parcela estimada</div>
-              <div className="mt-2 text-5xl sm:text-6xl font-display font-extrabold text-gradient-red">
+              <div className="mt-2 text-4xl sm:text-6xl font-display font-extrabold text-gradient-red break-words">
                 {fmt(parcela)}
               </div>
               <div className="mt-1 text-xs text-muted-foreground">por mês · {prazo}x</div>
