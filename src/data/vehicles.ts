@@ -107,4 +107,12 @@ export const VEHICLES: Vehicle[] = [
   },
 ];
 
-export const findVehicleBySlug = (slug: string) => VEHICLES.find((v) => v.slug === slug);
+const SLUG_ALIASES: Record<string, string> = {
+  "hyundai-creta-limited-2023": "hyundai-creta-limited-1-0-turbo-2023",
+  "hyundai-hb20-comfort-2022": "hyundai-hb20-comfort-plus-1-0-2022",
+  "infiniti-q50-premium-2019": "infiniti-q50-sport-3-0-v6-2021",
+};
+
+export const findVehicleBySlug = (slug: string) =>
+  VEHICLES.find((v) => v.slug === slug) ??
+  VEHICLES.find((v) => v.slug === SLUG_ALIASES[slug]);
