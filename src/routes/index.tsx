@@ -1,19 +1,21 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import {
-  Car, Phone, MessageCircle, CheckCircle2, Calculator, Sparkles,
+  Car, MessageCircle, CheckCircle2, Calculator, Sparkles,
   ShieldCheck, Clock, Users, FileText, ArrowRight, Star, Gauge,
-  Calendar, Settings2, Menu, X, Fuel, Hash, BadgeCheck,
+  Calendar, Settings2, Fuel, Hash, BadgeCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Header, Footer, FloatingWhatsapp, WHATSAPP, WA_MSG, createWhatsAppLink } from "@/components/site-chrome";
 import heroCar from "@/assets/hero-car.jpg";
 import car1 from "@/assets/car-1.jpg";
 import car2 from "@/assets/car-2.jpg";
 import car3 from "@/assets/car-3.jpg";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -29,28 +31,6 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const WHATSAPP_NUMBER = "5583981089495";
-const createWhatsAppLink = (msg: string) =>
-  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
-const WA_MSG = {
-  hero: "Olá, vim pelo site da Top Veículos e quero encontrar meu próximo carro.",
-  simulacao: "Olá, vim pelo site da Top Veículos e quero fazer uma simulação de financiamento.",
-  veiculo: "Olá, tenho interesse neste veículo e gostaria de saber as condições.",
-  avaliacao: "Olá, quero avaliar meu usado para dar como entrada na troca.",
-  aprovacao: "Olá, quero tentar minha aprovação para comprar um carro.",
-  cta: "Olá, quero falar com um consultor da Top Veículos.",
-};
-const WHATSAPP = createWhatsAppLink(WA_MSG.hero);
-
-const NAV = [
-  { label: "Início", href: "#inicio" },
-  { label: "Estoque", href: "#estoque" },
-  { label: "Financiamento", href: "#financiamento" },
-  { label: "Avalie seu usado", href: "#avaliacao" },
-  { label: "Clientes aprovados", href: "#depoimentos" },
-  { label: "Contato", href: "#contato" },
-];
-
 const VEHICLES = [
   { img: car1, name: "Hyundai Creta Limited 1.0 Turbo", year: "2023/2023", km: "18.420 km", gear: "Automático", fuel: "Flex", plate: "7", price: "R$ 124.900", parcel: "R$ 1.890", tag: "Mais procurado", pitch: "Ideal para famílias que querem SUV completo com baixa quilometragem." },
   { img: car2, name: "Hyundai HB20 Comfort Plus 1.0", year: "2022/2023", km: "32.100 km", gear: "Manual", fuel: "Flex", plate: "3", price: "R$ 72.500", parcel: "R$ 1.190", tag: "Entrada baixa", pitch: "Perfeito para o uso diário, econômico e fácil de aprovar." },
@@ -58,11 +38,9 @@ const VEHICLES = [
 ];
 
 function Index() {
-  const [menuOpen, setMenuOpen] = useState(false);
-
   return (
     <div id="inicio" className="min-h-screen bg-background text-foreground overflow-x-hidden">
-      <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+      <Header />
       <Hero />
       <FindCar />
       <Vehicles />
@@ -78,56 +56,9 @@ function Index() {
   );
 }
 
-function Header({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: (v: boolean) => void }) {
-  return (
-    <header className="fixed top-0 inset-x-0 z-50 backdrop-blur-xl bg-background/70 border-b border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <a href="#inicio" className="flex items-center gap-2 group">
-          <div className="h-9 w-9 rounded-lg bg-gradient-red grid place-items-center shadow-glow-red">
-            <Car className="h-5 w-5 text-primary-foreground" />
-          </div>
-          <span className="font-display font-bold text-lg tracking-tight">
-            Top <span className="text-gradient-red">Veículos</span>
-          </span>
-        </a>
-        <nav className="hidden lg:flex items-center gap-7">
-          {NAV.map((n) => (
-            <a key={n.href} href={n.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              {n.label}
-            </a>
-          ))}
-        </nav>
-        <div className="hidden lg:flex items-center gap-2">
-          <Button asChild size="sm" className="bg-gradient-red shadow-glow-red hover:opacity-90">
-            <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
-              <MessageCircle className="h-4 w-4" /> WhatsApp
-            </a>
-          </Button>
-        </div>
-        <button onClick={() => setMenuOpen(!menuOpen)} className="lg:hidden p-2 text-foreground" aria-label="Menu">
-          {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
-      </div>
-      {menuOpen && (
-        <div className="lg:hidden border-t border-border bg-background/95 backdrop-blur-xl animate-fade-in">
-          <div className="px-4 py-4 flex flex-col gap-1">
-            {NAV.map((n) => (
-              <a key={n.href} href={n.href} onClick={() => setMenuOpen(false)}
-                className="px-3 py-3 rounded-md text-sm hover:bg-muted transition-colors">
-                {n.label}
-              </a>
-            ))}
-            <Button asChild className="mt-3 bg-gradient-red shadow-glow-red">
-              <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
-                <MessageCircle className="h-4 w-4" /> Falar no WhatsApp
-              </a>
-            </Button>
-          </div>
-        </div>
-      )}
-    </header>
-  );
-}
+
+
+
 
 function Hero() {
   return (
@@ -149,10 +80,10 @@ function Hero() {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild size="lg" className="bg-gradient-red shadow-glow-red hover:opacity-90 h-12 px-6">
-              <a href="#financiamento"><Calculator className="h-5 w-5" /> Simular financiamento</a>
+              <Link to="/financiamento"><Calculator className="h-5 w-5" /> Simular financiamento</Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="h-12 px-6 border-border bg-card/50 backdrop-blur">
-              <a href="#estoque"><Car className="h-5 w-5" /> Ver veículos</a>
+              <Link to="/estoque"><Car className="h-5 w-5" /> Ver veículos</Link>
             </Button>
             <Button asChild size="lg" variant="ghost" className="h-12 px-6 text-foreground hover:bg-muted">
               <a href={WHATSAPP} target="_blank" rel="noopener noreferrer"><MessageCircle className="h-5 w-5" /> WhatsApp</a>
@@ -404,7 +335,7 @@ function Vehicles() {
                 </div>
                 <div className="mt-4 grid gap-2">
                   <Button asChild size="sm" className="bg-gradient-red shadow-glow-red">
-                    <a href="#financiamento"><Calculator className="h-4 w-4" /> Simular este veículo</a>
+                    <Link to="/financiamento"><Calculator className="h-4 w-4" /> Simular este veículo</Link>
                   </Button>
                   <Button asChild size="sm" variant="outline" className="border-border">
                     <a href={createWhatsAppLink(`${WA_MSG.veiculo} (${v.name})`)} target="_blank" rel="noopener noreferrer"><MessageCircle className="h-4 w-4" /> Tenho interesse no WhatsApp</a>
@@ -691,7 +622,7 @@ function FinalCta() {
             </a>
           </Button>
           <Button asChild size="lg" variant="outline" className="border-border h-12 px-7 text-base">
-            <a href="#financiamento"><Calculator className="h-5 w-5" /> Simular agora</a>
+            <Link to="/financiamento"><Calculator className="h-5 w-5" /> Simular agora</Link>
           </Button>
         </div>
       </div>
@@ -699,36 +630,3 @@ function FinalCta() {
   );
 }
 
-function Footer() {
-  return (
-    <footer className="border-t border-border py-10 bg-graphite/40">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-        <div className="flex items-center gap-2">
-          <div className="h-7 w-7 rounded-md bg-gradient-red grid place-items-center"><Car className="h-4 w-4 text-primary-foreground" /></div>
-          <span className="font-display font-bold text-foreground">Top Veículos</span>
-          <span className="hidden sm:inline">· Aprovação certa, carro certo.</span>
-        </div>
-        <div className="flex items-center gap-5">
-          <a href="#estoque" className="hover:text-foreground">Estoque</a>
-          <a href="#financiamento" className="hover:text-foreground">Financiamento</a>
-          <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className="hover:text-foreground flex items-center gap-1">
-            <Phone className="h-3.5 w-3.5" /> Contato
-          </a>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
-function FloatingWhatsapp() {
-  return (
-    <a href={WHATSAPP} target="_blank" rel="noopener noreferrer"
-      className="fixed bottom-5 right-5 z-50 group">
-      <span className="absolute inset-0 rounded-full bg-[var(--whatsapp)] opacity-30 blur-xl animate-pulse" />
-      <span className="relative flex items-center gap-2 h-14 px-5 rounded-full bg-[var(--whatsapp)] text-white font-semibold shadow-[0_10px_30px_-5px_oklch(0.7_0.18_150/0.6)] hover:scale-105 transition-transform">
-        <MessageCircle className="h-6 w-6" />
-        <span className="hidden sm:inline">Falar no WhatsApp</span>
-      </span>
-    </a>
-  );
-}
