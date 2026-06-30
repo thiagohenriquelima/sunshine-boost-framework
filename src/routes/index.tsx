@@ -3,7 +3,7 @@ import { useState } from "react";
 import {
   Car, Phone, MessageCircle, CheckCircle2, Calculator, Sparkles,
   ShieldCheck, Clock, Users, FileText, ArrowRight, Star, Gauge,
-  Calendar, Settings2, Menu, X,
+  Calendar, Settings2, Menu, X, Fuel, Hash, BadgeCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
