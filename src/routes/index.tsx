@@ -645,12 +645,12 @@ function Testimonials() {
 
 function Faq() {
   const items = [
-    { q: "Em quanto tempo recebo a aprovação?", a: "Nossa pré-aprovação sai em até 2 minutos. A aprovação final, com a financeira, normalmente em algumas horas no mesmo dia útil." },
-    { q: "Qual o valor mínimo de entrada?", a: "Trabalhamos com entrada a partir de 10% do valor do veículo, com opções de entrada facilitada em até 12x no cartão." },
-    { q: "Tenho restrição no nome. Consigo financiar?", a: "Sim, trabalhamos com financeiras especializadas em todos os perfis de crédito. Faça a simulação e nossa equipe analisa o melhor caminho." },
-    { q: "Aceitam carro na troca?", a: "Sim! Avaliamos seu usado e quitamos eventual financiamento ativo, abatendo o valor da entrada do novo veículo." },
-    { q: "Quais documentos preciso enviar?", a: "RG, CPF, comprovante de residência e comprovante de renda. Para autônomos, podemos analisar com declaração de renda." },
-    { q: "Os veículos têm garantia?", a: "Todos os veículos passam por inspeção e contam com garantia mecânica. Modelos selecionados têm garantia estendida opcional." },
+    { q: "Em quanto tempo recebo a aprovação?", a: "Em muitos casos, conseguimos iniciar a análise rapidamente após o envio dos dados. O prazo final depende da financeira e da documentação enviada." },
+    { q: "Qual o valor mínimo de entrada?", a: "O valor de entrada pode variar de acordo com o veículo, perfil de crédito e condições disponíveis. Nossa equipe ajuda você a encontrar a melhor opção possível." },
+    { q: "Tenho restrição no nome. Consigo financiar?", a: "Cada caso precisa ser analisado individualmente. Mesmo com restrição, podemos verificar alternativas e orientar você sobre as possibilidades." },
+    { q: "Aceitam carro na troca?", a: "Sim. Você pode usar seu usado como parte do pagamento. Basta enviar os dados do veículo para nossa equipe fazer uma avaliação." },
+    { q: "Quais documentos preciso enviar?", a: "Normalmente são solicitados documento com foto, CPF, comprovante de residência e comprovante de renda. A documentação pode variar conforme a financeira." },
+    { q: "Os veículos têm garantia?", a: "As condições de garantia podem variar conforme o veículo. Consulte nossa equipe para saber os detalhes do carro de interesse." },
   ];
   return (
     <section className="py-16 sm:py-24">
