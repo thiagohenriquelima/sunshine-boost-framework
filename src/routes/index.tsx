@@ -30,7 +30,7 @@ export const Route = createFileRoute("/")({
 });
 
 const WHATSAPP_NUMBER = "5583981089495";
-const wa = (msg: string) =>
+const createWhatsAppLink = (msg: string) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
 const WA_MSG = {
   hero: "Olá, vim pelo site da Top Veículos e quero encontrar meu próximo carro.",
@@ -40,7 +40,7 @@ const WA_MSG = {
   aprovacao: "Olá, quero tentar minha aprovação para comprar um carro.",
   cta: "Olá, quero falar com um consultor da Top Veículos.",
 };
-const WHATSAPP = wa(WA_MSG.hero);
+const WHATSAPP = createWhatsAppLink(WA_MSG.hero);
 
 const NAV = [
   { label: "Início", href: "#inicio" },
@@ -239,11 +239,13 @@ function FindCar() {
             </div>
           </div>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Button size="lg" className="bg-gradient-red shadow-glow-red h-12 px-6">
-              <Sparkles className="h-5 w-5" /> Encontrar meu carro
+            <Button asChild size="lg" className="bg-gradient-red shadow-glow-red h-12 px-6">
+              <a href={createWhatsAppLink(WA_MSG.simulacao)} target="_blank" rel="noopener noreferrer">
+                <Sparkles className="h-5 w-5" /> Encontrar meu carro
+              </a>
             </Button>
             <Button asChild size="lg" variant="outline" className="h-12 px-6 border-border">
-              <a href={wa(WA_MSG.simulacao)} target="_blank" rel="noopener noreferrer">
+              <a href={createWhatsAppLink(WA_MSG.simulacao)} target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="h-5 w-5" /> Prefiro falar no WhatsApp
               </a>
             </Button>
@@ -296,7 +298,7 @@ function Vehicles() {
                     <a href="#financiamento"><Calculator className="h-4 w-4" /> Simular</a>
                   </Button>
                   <Button asChild size="sm" variant="outline" className="border-border">
-                    <a href={wa(`${WA_MSG.veiculo} (${v.name})`)} target="_blank" rel="noopener noreferrer"><MessageCircle className="h-4 w-4" /> WhatsApp</a>
+                    <a href={createWhatsAppLink(`${WA_MSG.veiculo} (${v.name})`)} target="_blank" rel="noopener noreferrer"><MessageCircle className="h-4 w-4" /> WhatsApp</a>
                   </Button>
                 </div>
               </div>
@@ -394,7 +396,7 @@ function Simulator() {
               </div>
               <div className="mt-6 flex flex-col sm:flex-row gap-3">
                 <Button asChild className="bg-gradient-red shadow-glow-red h-11 flex-1">
-                  <a href={wa(WA_MSG.aprovacao)} target="_blank" rel="noopener noreferrer">
+                  <a href={createWhatsAppLink(WA_MSG.aprovacao)} target="_blank" rel="noopener noreferrer">
                     <MessageCircle className="h-4 w-4" /> Aprovar minha simulação
                   </a>
                 </Button>
@@ -455,7 +457,7 @@ function Trade() {
                 <div className="space-y-2"><Label>WhatsApp</Label><Input placeholder="(00) 90000-0000" className="bg-background" /></div>
               </div>
               <Button asChild className="w-full h-11 bg-gradient-blue shadow-glow-blue">
-                <a href={wa(WA_MSG.avaliacao)} target="_blank" rel="noopener noreferrer">
+                <a href={createWhatsAppLink(WA_MSG.avaliacao)} target="_blank" rel="noopener noreferrer">
                   Quero minha avaliação <ArrowRight className="h-4 w-4" />
                 </a>
               </Button>
@@ -547,7 +549,7 @@ function FinalCta() {
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Button asChild size="lg" className="bg-gradient-red shadow-glow-red h-13 px-7 text-base h-12">
-            <a href={wa(WA_MSG.cta)} target="_blank" rel="noopener noreferrer">
+            <a href={createWhatsAppLink(WA_MSG.cta)} target="_blank" rel="noopener noreferrer">
               <MessageCircle className="h-5 w-5" /> Falar no WhatsApp
             </a>
           </Button>
