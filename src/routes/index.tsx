@@ -12,30 +12,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Header, Footer, FloatingWhatsapp, WHATSAPP, WA_MSG, createWhatsAppLink } from "@/components/site-chrome";
 import heroCar from "@/assets/hero-car.jpg";
-import car1 from "@/assets/car-1.jpg";
-import car2 from "@/assets/car-2.jpg";
-import car3 from "@/assets/car-3.jpg";
+import { VEHICLES } from "@/data/vehicles";
 
-
-export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Top Veículos — Seu próximo carro começa com a aprovação certa" },
-      { name: "description", content: "Veículos selecionados, financiamento facilitado e atendimento especializado. Simule, aprove e saia de carro novo com a Top Veículos." },
-      { property: "og:title", content: "Top Veículos — Aprovação certa, carro certo" },
-      { property: "og:description", content: "Simulação rápida, parceria com as melhores financeiras e atendimento humanizado." },
-      { property: "og:image", content: heroCar },
-      { name: "twitter:image", content: heroCar },
-    ],
-  }),
-  component: Index,
-});
-
-const VEHICLES = [
-  { img: car1, name: "Hyundai Creta Limited 1.0 Turbo", year: "2023/2023", km: "18.420 km", gear: "Automático", fuel: "Flex", plate: "7", price: "R$ 124.900", parcel: "R$ 1.890", tag: "Mais procurado", pitch: "Ideal para famílias que querem SUV completo com baixa quilometragem." },
-  { img: car2, name: "Hyundai HB20 Comfort Plus 1.0", year: "2022/2023", km: "32.100 km", gear: "Manual", fuel: "Flex", plate: "3", price: "R$ 72.500", parcel: "R$ 1.190", tag: "Entrada baixa", pitch: "Perfeito para o uso diário, econômico e fácil de aprovar." },
-  { img: car3, name: "Infiniti Q50 Sport 3.0 V6", year: "2021/2021", km: "41.800 km", gear: "Automático", fuel: "Gasolina", plate: "1", price: "R$ 189.900", parcel: "R$ 2.890", tag: "Premium", pitch: "Para quem busca conforto, status e desempenho em um sedã premium." },
-];
 
 function Index() {
   return (
@@ -297,7 +275,7 @@ function Vehicles() {
           </Button>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {VEHICLES.map((v) => {
+          {VEHICLES.slice(0, 3).map((v) => {
             const tagStyle =
               v.tag === "Premium" ? "bg-gradient-blue shadow-glow-blue"
               : v.tag === "Entrada baixa" ? "bg-accent shadow-glow-blue"
@@ -305,7 +283,7 @@ function Vehicles() {
               : "bg-gradient-red shadow-glow-red";
             return (
             <article key={v.name} className="group rounded-2xl overflow-hidden border border-border bg-card hover:border-primary/50 transition-all duration-300 shadow-card-premium hover:-translate-y-1 flex flex-col">
-              <div className="relative aspect-[4/3] overflow-hidden bg-graphite">
+              <Link to="/estoque/$slug" params={{ slug: v.slug }} className="relative aspect-[4/3] overflow-hidden bg-graphite block">
                 <img src={v.img} alt={v.name} width={1024} height={768} loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-semibold text-primary-foreground ${tagStyle}`}>
@@ -314,9 +292,9 @@ function Vehicles() {
                 <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-background/80 backdrop-blur text-[10px] font-semibold flex items-center gap-1 border border-border">
                   <BadgeCheck className="h-3 w-3 text-accent" /> Procedência
                 </div>
-              </div>
+              </Link>
               <div className="p-5 flex flex-col flex-1">
-                <h3 className="font-display font-bold text-lg leading-tight">{v.name}</h3>
+                <Link to="/estoque/$slug" params={{ slug: v.slug }} className="font-display font-bold text-lg leading-tight hover:text-primary transition-colors">{v.name}</Link>
                 <p className="mt-1.5 text-xs text-muted-foreground italic">{v.pitch}</p>
                 <div className="mt-4 grid grid-cols-2 gap-x-3 gap-y-2 text-xs text-muted-foreground">
                   <span className="flex items-center gap-1.5"><Calendar className="h-3.5 w-3.5" />{v.year}</span>
@@ -337,7 +315,7 @@ function Vehicles() {
                 </div>
                 <div className="mt-4 grid gap-2">
                   <Button asChild size="sm" className="bg-gradient-red shadow-glow-red">
-                    <Link to="/financiamento"><Calculator className="h-4 w-4" /> Simular este veículo</Link>
+                    <Link to="/estoque/$slug" params={{ slug: v.slug }}><Calculator className="h-4 w-4" /> Ver detalhes do veículo</Link>
                   </Button>
                   <Button asChild size="sm" variant="outline" className="border-border">
                     <a href={createWhatsAppLink(`${WA_MSG.veiculo} (${v.name})`)} target="_blank" rel="noopener noreferrer"><MessageCircle className="h-4 w-4" /> Tenho interesse no WhatsApp</a>
@@ -345,6 +323,7 @@ function Vehicles() {
                 </div>
               </div>
             </article>
+
           );})}
         </div>
         <p className="mt-8 text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
