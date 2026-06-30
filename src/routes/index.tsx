@@ -57,56 +57,8 @@ function Index() {
 }
 
 
-function Header({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: (v: boolean) => void }) {
-  return (
-    <header className="fixed top-0 inset-x-0 z-50 backdrop-blur-xl bg-background/70 border-b border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <a href="#inicio" className="flex items-center gap-2 group">
-          <div className="h-9 w-9 rounded-lg bg-gradient-red grid place-items-center shadow-glow-red">
-            <Car className="h-5 w-5 text-primary-foreground" />
-          </div>
-          <span className="font-display font-bold text-lg tracking-tight">
-            Top <span className="text-gradient-red">Veículos</span>
-          </span>
-        </a>
-        <nav className="hidden lg:flex items-center gap-7">
-          {NAV.map((n) => (
-            <a key={n.href} href={n.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              {n.label}
-            </a>
-          ))}
-        </nav>
-        <div className="hidden lg:flex items-center gap-2">
-          <Button asChild size="sm" className="bg-gradient-red shadow-glow-red hover:opacity-90">
-            <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
-              <MessageCircle className="h-4 w-4" /> WhatsApp
-            </a>
-          </Button>
-        </div>
-        <button onClick={() => setMenuOpen(!menuOpen)} className="lg:hidden p-2 text-foreground" aria-label="Menu">
-          {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
-      </div>
-      {menuOpen && (
-        <div className="lg:hidden border-t border-border bg-background/95 backdrop-blur-xl animate-fade-in">
-          <div className="px-4 py-4 flex flex-col gap-1">
-            {NAV.map((n) => (
-              <a key={n.href} href={n.href} onClick={() => setMenuOpen(false)}
-                className="px-3 py-3 rounded-md text-sm hover:bg-muted transition-colors">
-                {n.label}
-              </a>
-            ))}
-            <Button asChild className="mt-3 bg-gradient-red shadow-glow-red">
-              <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
-                <MessageCircle className="h-4 w-4" /> Falar no WhatsApp
-              </a>
-            </Button>
-          </div>
-        </div>
-      )}
-    </header>
-  );
-}
+
+
 
 function Hero() {
   return (
