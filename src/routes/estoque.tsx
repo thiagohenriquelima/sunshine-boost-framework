@@ -5,10 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { PageShell, PageHero, createWhatsAppLink, WA_MSG } from "@/components/site-chrome";
-import car1 from "@/assets/car-1.jpg";
-import car2 from "@/assets/car-2.jpg";
-import car3 from "@/assets/car-3.jpg";
+import { PageShell, PageHero, createWhatsAppLink } from "@/components/site-chrome";
+import { VEHICLES, type Vehicle } from "@/data/vehicles";
 
 export const Route = createFileRoute("/estoque")({
   head: () => ({
@@ -22,20 +20,7 @@ export const Route = createFileRoute("/estoque")({
   component: EstoquePage,
 });
 
-type Vehicle = {
-  img: string; name: string; brand: string; type: string; year: string; yearNum: number;
-  km: string; gear: string; fuel: string; plate: string; price: string; priceNum: number;
-  parcel: string; tag: string; pitch: string;
-};
-
-const STOCK: Vehicle[] = [
-  { img: car1, name: "Hyundai Creta Limited 1.0 Turbo", brand: "Hyundai", type: "SUV", year: "2023/2023", yearNum: 2023, km: "18.420 km", gear: "Automático", fuel: "Flex", plate: "7", price: "R$ 124.900", priceNum: 124900, parcel: "R$ 1.890", tag: "Mais procurado", pitch: "SUV completo, ideal para família." },
-  { img: car2, name: "Hyundai HB20 Comfort Plus 1.0", brand: "Hyundai", type: "Hatch", year: "2022/2023", yearNum: 2022, km: "32.100 km", gear: "Manual", fuel: "Flex", plate: "3", price: "R$ 72.500", priceNum: 72500, parcel: "R$ 1.190", tag: "Entrada baixa", pitch: "Econômico, fácil de aprovar." },
-  { img: car3, name: "Infiniti Q50 Sport 3.0 V6", brand: "Infiniti", type: "Sedan", year: "2021/2021", yearNum: 2021, km: "41.800 km", gear: "Automático", fuel: "Gasolina", plate: "1", price: "R$ 189.900", priceNum: 189900, parcel: "R$ 2.890", tag: "Premium", pitch: "Conforto, status e desempenho premium." },
-  { img: car1, name: "Hyundai Creta Action 1.6", brand: "Hyundai", type: "SUV", year: "2022/2022", yearNum: 2022, km: "39.800 km", gear: "Automático", fuel: "Flex", plate: "5", price: "R$ 108.900", priceNum: 108900, parcel: "R$ 1.690", tag: "Oportunidade", pitch: "SUV versátil com ótimo custo-benefício." },
-  { img: car2, name: "Hyundai HB20 Sense 1.0", brand: "Hyundai", type: "Hatch", year: "2023/2024", yearNum: 2023, km: "12.500 km", gear: "Manual", fuel: "Flex", plate: "9", price: "R$ 78.900", priceNum: 78900, parcel: "R$ 1.290", tag: "Mais procurado", pitch: "Quase zero, baixa quilometragem." },
-  { img: car3, name: "Infiniti Q50 Luxe 2.0 Turbo", brand: "Infiniti", type: "Sedan", year: "2020/2020", yearNum: 2020, km: "58.200 km", gear: "Automático", fuel: "Gasolina", plate: "4", price: "R$ 159.900", priceNum: 159900, parcel: "R$ 2.490", tag: "Premium", pitch: "Sedã luxo com pacote completo." },
-];
+const STOCK = VEHICLES;
 
 function EstoquePage() {
   const [brand, setBrand] = useState<string>("all");
@@ -142,15 +127,17 @@ function VehicleCard({ v }: { v: Vehicle }) {
     : "bg-gradient-red shadow-glow-red";
   return (
     <article className="group rounded-2xl overflow-hidden border border-border bg-card hover:border-primary/50 transition-all duration-300 shadow-card-premium hover:-translate-y-1 flex flex-col">
-      <div className="relative aspect-[4/3] overflow-hidden bg-graphite">
+      <Link to="/estoque/$slug" params={{ slug: v.slug }} className="relative aspect-[4/3] overflow-hidden bg-graphite block">
         <img src={v.img} alt={v.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         <div className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-semibold text-primary-foreground ${tagStyle}`}>{v.tag}</div>
         <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-background/80 backdrop-blur text-[10px] font-semibold flex items-center gap-1 border border-border">
           <BadgeCheck className="h-3 w-3 text-accent" /> Procedência
         </div>
-      </div>
+      </Link>
       <div className="p-5 flex flex-col flex-1">
-        <h3 className="font-display font-bold text-lg leading-tight">{v.name}</h3>
+        <Link to="/estoque/$slug" params={{ slug: v.slug }} className="font-display font-bold text-lg leading-tight hover:text-primary transition-colors">
+          {v.name}
+        </Link>
         <p className="mt-1.5 text-xs text-muted-foreground italic">{v.pitch}</p>
         <div className="mt-4 grid grid-cols-2 gap-x-3 gap-y-2 text-xs text-muted-foreground">
           <span className="flex items-center gap-1.5"><Calendar className="h-3.5 w-3.5" />{v.year}</span>
@@ -171,10 +158,10 @@ function VehicleCard({ v }: { v: Vehicle }) {
         </div>
         <div className="mt-4 grid gap-2">
           <Button asChild size="sm" className="bg-gradient-red shadow-glow-red">
-            <Link to="/financiamento"><Calculator className="h-4 w-4" /> Simular este veículo</Link>
+            <Link to="/estoque/$slug" params={{ slug: v.slug }}><Calculator className="h-4 w-4" /> Ver detalhes do veículo</Link>
           </Button>
           <Button asChild size="sm" variant="outline" className="border-border">
-            <a href={createWhatsAppLink(`${WA_MSG.veiculo} (${v.name})`)} target="_blank" rel="noopener noreferrer">
+            <a href={createWhatsAppLink(`Olá, tenho interesse no ${v.name} que vi no site da Top Veículos. Gostaria de saber as condições.`)} target="_blank" rel="noopener noreferrer">
               <MessageCircle className="h-4 w-4" /> Tenho interesse no WhatsApp
             </a>
           </Button>
