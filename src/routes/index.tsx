@@ -607,23 +607,23 @@ function Faq() {
 
 function FinalCta() {
   return (
-    <section id="contato" className="py-20 sm:py-28 relative overflow-hidden">
+    <section id="contato" className="py-16 sm:py-28 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-red opacity-15" />
       <div className="absolute inset-0 bg-gradient-hero" />
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-4xl sm:text-6xl font-display font-extrabold leading-tight">
+        <h2 className="text-[34px] sm:text-6xl font-display font-extrabold leading-[1.1] text-balance">
           Pronto para sair de <span className="text-gradient-red">carro novo?</span>
         </h2>
-        <p className="mt-5 text-lg text-muted-foreground max-w-xl mx-auto">
+        <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-xl mx-auto">
           Fale agora com um consultor Top Veículos e receba a melhor proposta do mercado.
         </p>
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Button asChild size="lg" className="bg-gradient-red shadow-glow-red h-13 px-7 text-base h-12">
+        <div className="mt-8 flex flex-col sm:flex-row sm:flex-wrap justify-center gap-3">
+          <Button asChild size="lg" className="bg-gradient-red shadow-glow-red h-14 sm:h-12 px-7 text-base w-full sm:w-auto">
             <a href={createWhatsAppLink(WA_MSG.cta)} target="_blank" rel="noopener noreferrer">
               <MessageCircle className="h-5 w-5" /> Falar no WhatsApp
             </a>
           </Button>
-          <Button asChild size="lg" variant="outline" className="border-border h-12 px-7 text-base">
+          <Button asChild size="lg" variant="outline" className="border-border h-14 sm:h-12 px-7 text-base w-full sm:w-auto">
             <Link to="/financiamento"><Calculator className="h-5 w-5" /> Simular agora</Link>
           </Button>
         </div>
