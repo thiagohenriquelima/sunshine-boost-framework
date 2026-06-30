@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { PageShell, PageHero, createWhatsAppLink, WA_MSG } from "@/components/site-chrome";
+import { PageShell, PageHero, createWhatsAppLink } from "@/components/site-chrome";
 import { VEHICLES, type Vehicle } from "@/data/vehicles";
 
 export const Route = createFileRoute("/estoque")({
