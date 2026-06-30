@@ -80,10 +80,10 @@ function Hero() {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild size="lg" className="bg-gradient-red shadow-glow-red hover:opacity-90 h-12 px-6">
-              <a href="#financiamento"><Calculator className="h-5 w-5" /> Simular financiamento</a>
+              <Link to="/financiamento"><Calculator className="h-5 w-5" /> Simular financiamento</Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="h-12 px-6 border-border bg-card/50 backdrop-blur">
-              <a href="#estoque"><Car className="h-5 w-5" /> Ver veículos</a>
+              <Link to="/estoque"><Car className="h-5 w-5" /> Ver veículos</Link>
             </Button>
             <Button asChild size="lg" variant="ghost" className="h-12 px-6 text-foreground hover:bg-muted">
               <a href={WHATSAPP} target="_blank" rel="noopener noreferrer"><MessageCircle className="h-5 w-5" /> WhatsApp</a>
@@ -335,7 +335,7 @@ function Vehicles() {
                 </div>
                 <div className="mt-4 grid gap-2">
                   <Button asChild size="sm" className="bg-gradient-red shadow-glow-red">
-                    <a href="#financiamento"><Calculator className="h-4 w-4" /> Simular este veículo</a>
+                    <Link to="/financiamento"><Calculator className="h-4 w-4" /> Simular este veículo</Link>
                   </Button>
                   <Button asChild size="sm" variant="outline" className="border-border">
                     <a href={createWhatsAppLink(`${WA_MSG.veiculo} (${v.name})`)} target="_blank" rel="noopener noreferrer"><MessageCircle className="h-4 w-4" /> Tenho interesse no WhatsApp</a>
@@ -622,7 +622,7 @@ function FinalCta() {
             </a>
           </Button>
           <Button asChild size="lg" variant="outline" className="border-border h-12 px-7 text-base">
-            <a href="#financiamento"><Calculator className="h-5 w-5" /> Simular agora</a>
+            <Link to="/financiamento"><Calculator className="h-5 w-5" /> Simular agora</Link>
           </Button>
         </div>
       </div>
