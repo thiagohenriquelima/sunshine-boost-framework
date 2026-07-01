@@ -107,42 +107,102 @@ function Hero() {
   );
 }
 
-const RECOMMENDATIONS = [
-  {
-    name: "Hyundai HB20 Comfort",
-    reason: "Equilibrio entre preço, economia e revenda — encaixa na sua parcela ideal.",
-    parcela: "R$ 1.290",
-    profile: "Economia",
-    profileTone: "bg-brand-blue/15 text-brand-blue border-brand-blue/30",
-  },
-  {
-    name: "Hyundai Creta Limited",
-    reason: "SUV espaçoso para família, com conforto e segurança para o dia a dia.",
-    parcela: "R$ 1.890",
-    profile: "Família",
-    profileTone: "bg-primary/15 text-primary border-primary/30",
-  },
-  {
-    name: "Infiniti Q50 Sport",
-    reason: "Para quem busca conforto premium e performance sem abrir mão de status.",
-    parcela: "R$ 2.690",
-    profile: "Conforto",
-    profileTone: "bg-foreground/10 text-foreground border-foreground/20",
-  },
-];
+type Priority = "economia" | "conforto" | "potencia" | "tecnologia";
+type MainUse = "cidade" | "trabalho" | "familia" | "viagens";
+type VehicleType = "Hatch" | "Sedan" | "SUV" | "Picape";
+
+const USE_MAP: Record<VehicleType, MainUse[]> = {
+  Hatch: ["cidade", "trabalho"],
+  Sedan: ["trabalho", "viagens"],
+  SUV: ["familia", "viagens"],
+  Picape: ["trabalho", "viagens"],
+};
+
+const TAG_MAP: Record<VehicleType, Priority[]> = {
+  Hatch: ["economia", "tecnologia"],
+  Sedan: ["conforto", "potencia", "tecnologia"],
+  SUV: ["conforto", "tecnologia"],
+  Picape: ["potencia"],
+};
+
+const parseMoney = (s: string) => Number(String(s).replace(/\D/g, "")) || 0;
+const fmtBRL = (n: number) => n.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 });
+
+function calcInstallment(financed: number, rate = 0.0199, term = 60) {
+  if (financed <= 0) return 0;
+  const p = Math.pow(1 + rate, term);
+  return (financed * (rate * p)) / (p - 1);
+}
+
+function recommend(input: {
+  budget: number; downPayment: number; desiredInstallment: number;
+  vehicleType: string; mainUse: string; priority: string;
+}) {
+  return VEHICLES.map((v) => {
+    const type = v.type as VehicleType;
+    const idealUse = USE_MAP[type] ?? [];
+    const tags = TAG_MAP[type] ?? [];
+    if (v.tag === "Premium") tags.push("conforto", "potencia");
+
+    const financed = Math.max(0, v.priceNum - input.downPayment);
+    const installment = calcInstallment(financed);
+
+    let score = 0;
+    const reasons: string[] = [];
+    if (input.budget > 0) {
+      if (v.priceNum <= input.budget) { score += 40; reasons.push("dentro do seu orçamento"); }
+      else if (v.priceNum <= input.budget * 1.15) { score += 10; }
+      else { score -= 30; }
+    } else { score += 15; }
+
+    if (input.desiredInstallment > 0 && installment > 0 && installment <= input.desiredInstallment) {
+      score += 25; reasons.push("parcela dentro do que você quer pagar");
+    } else if (input.desiredInstallment > 0 && installment > input.desiredInstallment * 1.15) {
+      score -= 10;
+    }
+
+    if (input.vehicleType && input.vehicleType !== "any" && type.toLowerCase() === input.vehicleType) {
+      score += 15; reasons.push(`é um ${type} como você pediu`);
+    }
+    if (input.mainUse && idealUse.includes(input.mainUse as MainUse)) {
+      score += 10; reasons.push(`combina com uso ${input.mainUse}`);
+    }
+    if (input.priority && tags.includes(input.priority as Priority)) {
+      score += 10; reasons.push(`prioriza ${input.priority}`);
+    }
+
+    return { v, score, installment, financed, reasons };
+  })
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3);
+}
 
 function FindCar() {
-  const [showResults, setShowResults] = useState(false);
+  const [budget, setBudget] = useState("");
+  const [downPayment, setDownPayment] = useState("");
+  const [desiredInstallment, setDesiredInstallment] = useState("");
+  const [vehicleType, setVehicleType] = useState("any");
+  const [mainUse, setMainUse] = useState("");
+  const [priority, setPriority] = useState("");
+  const [results, setResults] = useState<ReturnType<typeof recommend> | null>(null);
   const [loading, setLoading] = useState(false);
 
   const handleGenerate = () => {
     setLoading(true);
-    setShowResults(false);
+    setResults(null);
     setTimeout(() => {
+      const r = recommend({
+        budget: parseMoney(budget),
+        downPayment: parseMoney(downPayment),
+        desiredInstallment: parseMoney(desiredInstallment),
+        vehicleType, mainUse, priority,
+      });
+      setResults(r);
       setLoading(false);
-      setShowResults(true);
-    }, 900);
+    }, 700);
   };
+
+  const goodResults = results?.filter((r) => r.score >= 40) ?? [];
 
   return (
     <section className="py-16 sm:py-24 relative">
@@ -153,22 +213,25 @@ function FindCar() {
           <p className="mt-3 text-muted-foreground">Responda em segundos e veja opções com parcela que cabe no seu bolso.</p>
         </div>
         <div className="rounded-3xl border border-border bg-card/60 backdrop-blur p-5 sm:p-10 shadow-card-premium">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-5">
-            {[
-              { label: "Orçamento total", placeholder: "R$ 80.000" },
-              { label: "Entrada disponível", placeholder: "R$ 15.000" },
-              { label: "Parcela ideal", placeholder: "R$ 1.500" },
-            ].map((f) => (
-              <div key={f.label} className="space-y-2">
-                <Label className="text-xs text-muted-foreground">{f.label}</Label>
-                <Input placeholder={f.placeholder} className="h-11 bg-background border-border" />
-              </div>
-            ))}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="space-y-2">
+              <Label className="text-xs text-muted-foreground">Orçamento total</Label>
+              <Input value={budget} onChange={(e) => setBudget(e.target.value)} placeholder="R$ 80.000" className="h-11 bg-background border-border" />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-xs text-muted-foreground">Entrada disponível</Label>
+              <Input value={downPayment} onChange={(e) => setDownPayment(e.target.value)} placeholder="R$ 15.000" className="h-11 bg-background border-border" />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-xs text-muted-foreground">Parcela ideal</Label>
+              <Input value={desiredInstallment} onChange={(e) => setDesiredInstallment(e.target.value)} placeholder="R$ 1.500" className="h-11 bg-background border-border" />
+            </div>
             <div className="space-y-2">
               <Label className="text-xs text-muted-foreground">Tipo de carro</Label>
-              <Select>
+              <Select value={vehicleType} onValueChange={setVehicleType}>
                 <SelectTrigger className="h-11 bg-background border-border"><SelectValue placeholder="Selecione" /></SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="any">Qualquer tipo</SelectItem>
                   <SelectItem value="hatch">Hatch</SelectItem>
                   <SelectItem value="sedan">Sedan</SelectItem>
                   <SelectItem value="suv">SUV</SelectItem>
@@ -178,13 +241,25 @@ function FindCar() {
             </div>
             <div className="space-y-2">
               <Label className="text-xs text-muted-foreground">Uso principal</Label>
-              <Select>
+              <Select value={mainUse} onValueChange={setMainUse}>
                 <SelectTrigger className="h-11 bg-background border-border"><SelectValue placeholder="Selecione" /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="cidade">Cidade</SelectItem>
                   <SelectItem value="trabalho">Trabalho</SelectItem>
                   <SelectItem value="familia">Família</SelectItem>
                   <SelectItem value="viagens">Viagens</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-xs text-muted-foreground">Prioridade</Label>
+              <Select value={priority} onValueChange={setPriority}>
+                <SelectTrigger className="h-11 bg-background border-border"><SelectValue placeholder="Selecione" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="economia">Economia</SelectItem>
+                  <SelectItem value="conforto">Conforto</SelectItem>
+                  <SelectItem value="potencia">Potência</SelectItem>
+                  <SelectItem value="tecnologia">Tecnologia</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -195,7 +270,7 @@ function FindCar() {
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Button size="lg" onClick={handleGenerate} className="bg-gradient-red shadow-glow-red h-12 px-6">
-              <Sparkles className="h-5 w-5" /> {loading ? "Analisando perfil..." : "Encontrar meu carro"}
+              <Sparkles className="h-5 w-5" /> {loading ? "Analisando perfil..." : "Encontrar meu carro ideal"}
             </Button>
             <Button asChild size="lg" variant="outline" className="h-12 px-6 border-border">
               <a href={createWhatsAppLink(WA_MSG.simulacao)} target="_blank" rel="noopener noreferrer">
@@ -204,58 +279,89 @@ function FindCar() {
             </Button>
           </div>
 
-          {(loading || showResults) && (
+          {(loading || results) && (
             <div className="mt-10 pt-10 border-t border-border">
               <div className="flex items-center gap-2 mb-2">
-                <div className="relative">
-                  <Sparkles className="h-5 w-5 text-primary" />
-                  {loading && <span className="absolute inset-0 animate-ping"><Sparkles className="h-5 w-5 text-primary opacity-60" /></span>}
-                </div>
+                <Sparkles className="h-5 w-5 text-primary" />
                 <h3 className="text-xl sm:text-2xl font-bold">Recomendações inteligentes</h3>
               </div>
               <p className="text-sm text-muted-foreground mb-6">
-                {loading ? "Cruzando seu perfil com nosso estoque..." : "3 opções selecionadas para o seu perfil."}
+                {loading ? "Cruzando seu perfil com nosso estoque..." : `${goodResults.length || results!.length} opções selecionadas com base no seu perfil.`}
               </p>
 
               {loading ? (
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
                   {[0, 1, 2].map((i) => (
-                    <div key={i} className="h-56 rounded-2xl border border-border bg-background/40 animate-pulse" />
+                    <div key={i} className="h-64 rounded-2xl border border-border bg-background/40 animate-pulse" />
                   ))}
+                </div>
+              ) : goodResults.length === 0 ? (
+                <div className="rounded-2xl border border-border bg-background/60 p-6 text-center">
+                  <p className="text-muted-foreground mb-4">
+                    Não encontramos uma opção 100% compatível com os dados informados, mas nossa equipe pode buscar um veículo ideal para o seu perfil.
+                  </p>
+                  <Button asChild className="bg-gradient-red shadow-glow-red">
+                    <a href={createWhatsAppLink(WA_MSG.cta)} target="_blank" rel="noopener noreferrer">
+                      <MessageCircle className="h-4 w-4" /> Falar com consultor no WhatsApp
+                    </a>
+                  </Button>
                 </div>
               ) : (
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                  {RECOMMENDATIONS.map((r, i) => (
-                    <article
-                      key={r.name}
-                      className="group rounded-2xl border border-border bg-background/60 p-5 hover:border-primary/50 transition-all duration-300 shadow-card-premium hover:-translate-y-1 animate-in fade-in slide-in-from-bottom-2"
-                      style={{ animationDelay: `${i * 100}ms` }}
-                    >
-                      <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[11px] font-semibold ${r.profileTone}`}>
-                        <Sparkles className="h-3 w-3" /> {r.profile}
-                      </div>
-                      <h4 className="mt-3 font-display font-bold text-lg leading-tight">{r.name}</h4>
-                      <p className="mt-2 text-sm text-muted-foreground">{r.reason}</p>
-                      <div className="mt-4 pt-4 border-t border-border">
-                        <div className="text-xs text-muted-foreground">Parcela estimada</div>
-                        <div className="text-xl font-bold text-primary">{r.parcela}<span className="text-xs text-muted-foreground font-normal">/mês</span></div>
-                      </div>
-                      <div className="mt-4 flex flex-col gap-2">
-                        <Button asChild size="sm" className="bg-gradient-red shadow-glow-red w-full">
-                          <a href={createWhatsAppLink(`Olá, quero esse perfil de carro: ${r.name} (${r.profile}).`)} target="_blank" rel="noopener noreferrer">
-                            Quero esse perfil de carro
-                          </a>
-                        </Button>
-                        <Button asChild size="sm" variant="outline" className="w-full border-border">
-                          <a href={createWhatsAppLink(WA_MSG.cta)} target="_blank" rel="noopener noreferrer">
-                            <MessageCircle className="h-4 w-4" /> Falar com consultor
-                          </a>
-                        </Button>
-                      </div>
-                    </article>
-                  ))}
+                  {goodResults.map((r, i) => {
+                    const maxScore = 100;
+                    const compat = Math.min(100, Math.round((r.score / maxScore) * 100));
+                    const entrada = parseMoney(downPayment);
+                    const reasonText = r.reasons.length
+                      ? `Recomendado porque ${r.reasons.slice(0, 3).join(", ")}.`
+                      : "Boa opção com base no seu perfil.";
+                    return (
+                      <article
+                        key={r.v.slug}
+                        className="group rounded-2xl border border-border bg-background/60 p-5 hover:border-primary/50 transition-all duration-300 shadow-card-premium hover:-translate-y-1 animate-in fade-in slide-in-from-bottom-2"
+                        style={{ animationDelay: `${i * 100}ms` }}
+                      >
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary text-[11px] font-semibold">
+                            <Sparkles className="h-3 w-3" /> {compat}% compatível
+                          </div>
+                          <span className="text-[10px] uppercase tracking-wider text-muted-foreground">{r.v.type}</span>
+                        </div>
+                        <h4 className="mt-3 font-display font-bold text-lg leading-tight">{r.v.name}</h4>
+                        <p className="mt-2 text-sm text-muted-foreground">{reasonText}</p>
+                        <dl className="mt-4 pt-4 border-t border-border grid grid-cols-2 gap-y-2 text-xs">
+                          <dt className="text-muted-foreground">Preço</dt>
+                          <dd className="text-right font-semibold">{fmtBRL(r.v.priceNum)}</dd>
+                          <dt className="text-muted-foreground">Entrada</dt>
+                          <dd className="text-right">{fmtBRL(entrada)}</dd>
+                          <dt className="text-muted-foreground">Financiado</dt>
+                          <dd className="text-right">{fmtBRL(r.financed)}</dd>
+                          <dt className="text-muted-foreground">Prazo</dt>
+                          <dd className="text-right">60x</dd>
+                        </dl>
+                        <div className="mt-3 pt-3 border-t border-border">
+                          <div className="text-xs text-muted-foreground">Parcela estimada</div>
+                          <div className="text-xl font-bold text-primary">{fmtBRL(r.installment)}<span className="text-xs text-muted-foreground font-normal">/mês</span></div>
+                        </div>
+                        <div className="mt-4 flex flex-col gap-2">
+                          <Button asChild size="sm" className="bg-gradient-red shadow-glow-red w-full">
+                            <Link to="/veiculo/$slug" params={{ slug: r.v.slug }}>Ver detalhes</Link>
+                          </Button>
+                          <Button asChild size="sm" variant="outline" className="w-full border-border">
+                            <a href={createWhatsAppLink(`Olá, tenho interesse no ${r.v.name} que a Top Veículos recomendou para o meu perfil.`)} target="_blank" rel="noopener noreferrer">
+                              <MessageCircle className="h-4 w-4" /> Falar no WhatsApp
+                            </a>
+                          </Button>
+                        </div>
+                      </article>
+                    );
+                  })}
                 </div>
               )}
+
+              <p className="mt-6 text-xs text-muted-foreground text-center">
+                Os valores são estimativas para demonstração. A aprovação e as condições finais dependem da análise de crédito.
+              </p>
             </div>
           )}
         </div>
