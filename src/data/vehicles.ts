@@ -107,10 +107,23 @@ export const VEHICLES: Vehicle[] = [
   },
 ];
 
+VEHICLES.push({
+  slug: "infiniti-q50-premium-2019",
+  img: car3, gallery: [car3, car1, car2, car3],
+  name: "Infiniti Q50 Premium",
+  brand: "Infiniti", type: "Sedan", year: "2019/2019", yearNum: 2019,
+  km: "68.900 km", gear: "Automático", fuel: "Gasolina", plate: "8",
+  price: "R$ 139.900", priceNum: 139900, parcel: "R$ 2.190",
+  tag: "Premium", pitch: "Sedã premium com pacote completo por preço justo.",
+  highlights: ["Motor 2.0 Turbo 211cv", "Pacote Premium completo", "Bancos em couro", "Multimídia dupla tela"],
+  features: ["Teto solar", "Bancos elétricos com memória", "Ar-condicionado dual zone", "Sensores de estacionamento", "Câmera de ré", "Faróis LED", "Rodas de liga 18\"", "Partida sem chave", "Controle de estabilidade"],
+  condition: "Veículo revisado, segundo dono, interior conservado, documentação em dia.",
+  whyWorth: ["Sedã premium abaixo do valor de mercado", "Pacote completo de tecnologia", "Exclusividade e conforto", "Aceita troca e financiamento"],
+});
+
 const SLUG_ALIASES: Record<string, string> = {
   "hyundai-creta-limited-2023": "hyundai-creta-limited-1-0-turbo-2023",
   "hyundai-hb20-comfort-2022": "hyundai-hb20-comfort-plus-1-0-2022",
-  "infiniti-q50-premium-2019": "infiniti-q50-sport-3-0-v6-2021",
 };
 
 export const findVehicleBySlug = (slug: string) =>
