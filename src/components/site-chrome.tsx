@@ -3,6 +3,25 @@ import { Link } from "@tanstack/react-router";
 import { Car, MessageCircle, Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+function BrandLogo({ className = "" }: { className?: string }) {
+  const [errored, setErrored] = useState(false);
+  if (errored) {
+    return (
+      <span className="font-display font-bold text-base sm:text-lg tracking-tight">
+        Top <span className="text-gradient-red">Veículos</span>
+      </span>
+    );
+  }
+  return (
+    <img
+      src="/logo-top-veiculos.png"
+      alt="Top Veículos"
+      onError={() => setErrored(true)}
+      className={`w-auto object-contain h-[34px] sm:h-[48px] ${className}`}
+    />
+  );
+}
+
 export const WHATSAPP_NUMBER = "5583981089495";
 export const createWhatsAppLink = (msg: string) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
