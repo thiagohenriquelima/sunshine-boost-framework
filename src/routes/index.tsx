@@ -11,7 +11,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Header, Footer, FloatingWhatsapp, WHATSAPP, WA_MSG, createWhatsAppLink } from "@/components/site-chrome";
-import heroCar from "@/assets/hero-car.jpg";
+import heroCarAsset from "@/assets/jeep-compass-hero.jpg.asset.json";
+const heroCar = heroCarAsset.url;
 import { VEHICLES, FEATURED_VEHICLES } from "@/data/vehicles";
 
 
