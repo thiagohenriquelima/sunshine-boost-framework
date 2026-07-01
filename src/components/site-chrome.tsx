@@ -18,7 +18,7 @@ function BrandLogo() {
       src={logoAsset.url}
       alt="Top Veículos"
       onError={() => setErrored(true)}
-      className="w-auto max-w-none object-contain h-[42px] sm:h-[56px]"
+      className="w-auto max-w-none object-contain h-12 sm:h-20 lg:h-[88px]"
     />
   );
 }
