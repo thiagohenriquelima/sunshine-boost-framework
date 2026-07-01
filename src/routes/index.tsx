@@ -11,7 +11,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Header, Footer, FloatingWhatsapp, WHATSAPP, WA_MSG, createWhatsAppLink } from "@/components/site-chrome";
-import heroCar from "@/assets/hero-car.jpg";
+import heroCarAsset from "@/assets/jeep-compass-hero.jpg.asset.json";
+const heroCar = heroCarAsset.url;
 import { VEHICLES, FEATURED_VEHICLES } from "@/data/vehicles";
 
 
@@ -89,7 +90,7 @@ function Hero() {
         <div className="relative animate-scale-in">
           <div className="absolute -inset-4 bg-gradient-red opacity-20 blur-3xl rounded-3xl" />
           <div className="relative rounded-3xl overflow-hidden border border-border shadow-card-premium">
-            <img src={heroCar} alt="Carro premium em showroom Top Veículos" width={1600} height={1024}
+            <img src={heroCar} alt="Jeep Compass branca em destaque - Top Veículos" width={1600} height={1024}
               className="w-full h-auto object-cover" />
             <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 p-4 rounded-2xl bg-background/80 backdrop-blur-xl border border-border flex items-center justify-between">
               <div>
