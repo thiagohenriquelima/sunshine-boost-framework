@@ -127,7 +127,7 @@ function VehicleCard({ v }: { v: Vehicle }) {
     : "bg-gradient-red shadow-glow-red";
   return (
     <article className="group rounded-2xl overflow-hidden border border-border bg-card hover:border-primary/50 transition-all duration-300 shadow-card-premium hover:-translate-y-1 flex flex-col">
-      <Link to="/estoque/$slug" params={{ slug: v.slug }} className="relative aspect-[4/3] overflow-hidden bg-graphite block">
+      <Link to="/veiculo/$slug" params={{ slug: v.slug }} className="relative aspect-[4/3] overflow-hidden bg-graphite block cursor-pointer">
         <img src={v.img} alt={v.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         <div className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-semibold text-primary-foreground ${tagStyle}`}>{v.tag}</div>
         <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-background/80 backdrop-blur text-[10px] font-semibold flex items-center gap-1 border border-border">
@@ -135,7 +135,7 @@ function VehicleCard({ v }: { v: Vehicle }) {
         </div>
       </Link>
       <div className="p-5 flex flex-col flex-1">
-        <Link to="/estoque/$slug" params={{ slug: v.slug }} className="font-display font-bold text-lg leading-tight hover:text-primary transition-colors">
+        <Link to="/veiculo/$slug" params={{ slug: v.slug }} className="font-display font-bold text-lg leading-tight hover:text-primary transition-colors cursor-pointer">
           {v.name}
         </Link>
         <p className="mt-1.5 text-xs text-muted-foreground italic">{v.pitch}</p>
@@ -157,8 +157,8 @@ function VehicleCard({ v }: { v: Vehicle }) {
           </div>
         </div>
         <div className="mt-4 grid gap-2">
-          <Button asChild size="sm" className="bg-gradient-red shadow-glow-red">
-            <Link to="/estoque/$slug" params={{ slug: v.slug }}><Calculator className="h-4 w-4" /> Ver detalhes do veículo</Link>
+          <Button asChild size="sm" className="bg-gradient-red shadow-glow-red cursor-pointer">
+            <Link to="/veiculo/$slug" params={{ slug: v.slug }}><Calculator className="h-4 w-4" /> Ver detalhes</Link>
           </Button>
           <Button asChild size="sm" variant="outline" className="border-border">
             <a href={createWhatsAppLink(`Olá, tenho interesse no ${v.name} que vi no site da Top Veículos. Gostaria de saber as condições.`)} target="_blank" rel="noopener noreferrer">
