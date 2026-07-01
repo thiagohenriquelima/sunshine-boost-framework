@@ -2,23 +2,13 @@ import { useState, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { MessageCircle, Menu, X, Phone, Car } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import logoAsset from "@/assets/logo-top-veiculos.png.asset.json";
 
 function BrandLogo() {
-  const [errored, setErrored] = useState(false);
-  if (errored) {
-    return (
-      <span className="font-display font-bold text-base sm:text-lg tracking-tight">
-        Top <span className="text-gradient-red">Veículos</span>
-      </span>
-    );
-  }
   return (
     <img
-      src={logoAsset.url}
+      src="/logo-top-veiculos.png"
       alt="Top Veículos"
-      onError={() => setErrored(true)}
-      className="w-auto max-w-none object-contain h-[42px] sm:h-[56px]"
+      className="w-auto max-w-none object-contain h-12 sm:h-[72px]"
     />
   );
 }
