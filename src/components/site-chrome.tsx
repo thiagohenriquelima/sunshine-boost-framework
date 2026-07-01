@@ -5,13 +5,13 @@ import { Button } from "@/components/ui/button";
 
 function BrandLogo() {
   return (
-    <img
-      src="/logo-top-veiculos.png"
-      alt="Top Veículos"
-      className="w-auto max-w-none object-contain h-12 sm:h-[72px]"
-    />
+    <span className="font-display font-bold tracking-tight text-xl sm:text-2xl leading-none">
+      <span className="text-white">Top</span>
+      <span className="text-primary"> Veículos</span>
+    </span>
   );
 }
+
 
 export const WHATSAPP_NUMBER = "5583981089495";
 export const createWhatsAppLink = (msg: string) =>
@@ -42,7 +42,7 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <header className="fixed top-0 inset-x-0 z-50 backdrop-blur-xl bg-background/70 border-b border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-24 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center group" aria-label="Top Veículos - Início">
           <BrandLogo />
         </Link>
@@ -139,7 +139,7 @@ export function PageShell({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Header />
-      <main className="pt-16 sm:pt-24 pb-28 sm:pb-16">{children}</main>
+      <main className="pt-16 pb-28 sm:pb-16">{children}</main>
       <Footer />
       <FloatingWhatsapp />
     </div>
