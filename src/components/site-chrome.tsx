@@ -42,7 +42,7 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <header className="fixed top-0 inset-x-0 z-50 backdrop-blur-xl bg-background/70 border-b border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-24 flex items-center justify-between">
         <Link to="/" className="flex items-center group" aria-label="Top Veículos - Início">
           <BrandLogo />
         </Link>
