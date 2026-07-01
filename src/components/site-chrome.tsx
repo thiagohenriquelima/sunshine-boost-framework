@@ -52,13 +52,8 @@ export function Header() {
   return (
     <header className="fixed top-0 inset-x-0 z-50 backdrop-blur-xl bg-background/70 border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 group">
-          <div className="h-9 w-9 rounded-lg bg-gradient-red grid place-items-center shadow-glow-red">
-            <Car className="h-5 w-5 text-primary-foreground" />
-          </div>
-          <span className="font-display font-bold text-lg tracking-tight">
-            Top <span className="text-gradient-red">Veículos</span>
-          </span>
+        <Link to="/" className="flex items-center group" aria-label="Top Veículos - Início">
+          <BrandLogo />
         </Link>
         <nav className="hidden lg:flex items-center gap-7">
           {NAV.map((n) => (
