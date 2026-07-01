@@ -2,23 +2,13 @@ import { useState, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { MessageCircle, Menu, X, Phone, Car } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import logoAsset from "@/assets/logo-top-veiculos.png.asset.json";
 
 function BrandLogo() {
-  const [errored, setErrored] = useState(false);
-  if (errored) {
-    return (
-      <span className="font-display font-bold text-base sm:text-lg tracking-tight">
-        Top <span className="text-gradient-red">Veículos</span>
-      </span>
-    );
-  }
   return (
     <img
-      src={logoAsset.url}
+      src="/logo-top-veiculos.png"
       alt="Top Veículos"
-      onError={() => setErrored(true)}
-      className="w-auto max-w-none object-contain h-[42px] sm:h-[56px]"
+      className="w-auto max-w-none object-contain h-12 sm:h-[72px]"
     />
   );
 }
@@ -52,7 +42,7 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <header className="fixed top-0 inset-x-0 z-50 backdrop-blur-xl bg-background/70 border-b border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-24 flex items-center justify-between">
         <Link to="/" className="flex items-center group" aria-label="Top Veículos - Início">
           <BrandLogo />
         </Link>
@@ -149,7 +139,7 @@ export function PageShell({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Header />
-      <main className="pt-16 pb-28 sm:pb-16">{children}</main>
+      <main className="pt-16 sm:pt-24 pb-28 sm:pb-16">{children}</main>
       <Footer />
       <FloatingWhatsapp />
     </div>
