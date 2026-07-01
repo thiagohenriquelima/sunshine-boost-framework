@@ -44,8 +44,7 @@ export const Route = createFileRoute("/estoque/$slug")({
   component: VehicleDetailPage,
 });
 
-export { NotFoundVehicle };
-function NotFoundVehicle() {
+export function NotFoundVehicle() {
   return (
     <PageShell>
       <div className="max-w-2xl mx-auto px-4 py-24 text-center">
