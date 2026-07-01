@@ -139,7 +139,7 @@ export function PageShell({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Header />
-      <main className="pt-16 sm:pt-24 pb-28 sm:pb-16">{children}</main>
+      <main className="pt-16 pb-28 sm:pb-16">{children}</main>
       <Footer />
       <FloatingWhatsapp />
     </div>
