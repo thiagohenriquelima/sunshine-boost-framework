@@ -109,13 +109,14 @@ function Hero() {
 
 type Priority = "economia" | "conforto" | "potencia" | "tecnologia";
 type MainUse = "cidade" | "trabalho" | "familia" | "viagens";
-type VehicleType = "Hatch" | "Sedan" | "SUV" | "Picape";
+type VehicleType = "Hatch" | "Sedan" | "SUV" | "Picape" | "Premium";
 
 const USE_MAP: Record<VehicleType, MainUse[]> = {
   Hatch: ["cidade", "trabalho"],
   Sedan: ["trabalho", "viagens"],
   SUV: ["familia", "viagens"],
   Picape: ["trabalho", "viagens"],
+  Premium: ["viagens", "trabalho"],
 };
 
 const TAG_MAP: Record<VehicleType, Priority[]> = {
@@ -123,6 +124,7 @@ const TAG_MAP: Record<VehicleType, Priority[]> = {
   Sedan: ["conforto", "potencia", "tecnologia"],
   SUV: ["conforto", "tecnologia"],
   Picape: ["potencia"],
+  Premium: ["conforto", "potencia", "tecnologia"],
 };
 
 const parseMoney = (s: string) => Number(String(s).replace(/\D/g, "")) || 0;
@@ -134,41 +136,66 @@ function calcInstallment(financed: number, rate = 0.0199, term = 60) {
   return (financed * (rate * p)) / (p - 1);
 }
 
+function effectiveType(v: typeof VEHICLES[number]): VehicleType {
+  if (v.tag === "Premium") return "Premium";
+  return v.type as VehicleType;
+}
+
 function recommend(input: {
   budget: number; downPayment: number; desiredInstallment: number;
   vehicleType: string; mainUse: string; priority: string;
 }) {
+  const hasBudget = input.budget > 0;
+  const hasParcela = input.desiredInstallment > 0;
+
   return VEHICLES.map((v) => {
-    const type = v.type as VehicleType;
+    const type = effectiveType(v);
     const idealUse = USE_MAP[type] ?? [];
     const tags = TAG_MAP[type] ?? [];
-    if (v.tag === "Premium") tags.push("conforto", "potencia");
 
     const financed = Math.max(0, v.priceNum - input.downPayment);
     const installment = calcInstallment(financed);
 
     let score = 0;
     const reasons: string[] = [];
-    if (input.budget > 0) {
-      if (v.priceNum <= input.budget) { score += 40; reasons.push("dentro do seu orçamento"); }
-      else if (v.priceNum <= input.budget * 1.15) { score += 10; }
-      else { score -= 30; }
-    } else { score += 15; }
 
-    if (input.desiredInstallment > 0 && installment > 0 && installment <= input.desiredInstallment) {
-      score += 25; reasons.push("parcela dentro do que você quer pagar");
-    } else if (input.desiredInstallment > 0 && installment > input.desiredInstallment * 1.15) {
-      score -= 10;
+    if (hasBudget) {
+      const ratio = v.priceNum / input.budget;
+      if (ratio <= 1.0 && ratio >= 0.7) { score += 45; reasons.push("preço alinhado ao seu orçamento"); }
+      else if (ratio < 0.7) { score += 20; reasons.push("valor abaixo do seu orçamento"); }
+      else if (ratio <= 1.15) { score += 10; reasons.push("um pouco acima, mas negociável"); }
+      else { score -= 40; }
+    } else { score += 10; }
+
+    if (hasParcela && installment > 0) {
+      const pr = installment / input.desiredInstallment;
+      if (pr <= 1.0 && pr >= 0.75) { score += 30; reasons.push("parcela próxima do que você quer pagar"); }
+      else if (pr < 0.75) { score += 18; reasons.push("parcela confortável no seu bolso"); }
+      else if (pr <= 1.15) { score += 5; }
+      else { score -= 25; }
     }
 
-    if (input.vehicleType && input.vehicleType !== "any" && type.toLowerCase() === input.vehicleType) {
-      score += 15; reasons.push(`é um ${type} como você pediu`);
+    if (input.vehicleType && input.vehicleType !== "any") {
+      if (type.toLowerCase() === input.vehicleType) {
+        score += 30; reasons.push(`é um ${type} como você pediu`);
+      } else {
+        score -= 15;
+      }
     }
+
     if (input.mainUse && idealUse.includes(input.mainUse as MainUse)) {
-      score += 10; reasons.push(`combina com uso ${input.mainUse}`);
+      score += 15; reasons.push(`ideal para uso ${input.mainUse}`);
     }
+
     if (input.priority && tags.includes(input.priority as Priority)) {
-      score += 10; reasons.push(`prioriza ${input.priority}`);
+      score += 15; reasons.push(`prioriza ${input.priority}`);
+    }
+
+    if ((input.priority === "conforto" || input.priority === "tecnologia") && type === "Premium") {
+      score += 8;
+    }
+    if (input.priority === "economia" && v.priceNum < 90000) {
+      score += 8; reasons.push("ótimo custo de manutenção");
     }
 
     return { v, score, installment, financed, reasons };
