@@ -12,7 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Header, Footer, FloatingWhatsapp, WHATSAPP, WA_MSG, createWhatsAppLink } from "@/components/site-chrome";
 import heroCar from "@/assets/hero-car.jpg";
-import { VEHICLES } from "@/data/vehicles";
+import { VEHICLES, FEATURED_VEHICLES } from "@/data/vehicles";
 
 
 export const Route = createFileRoute("/")({
