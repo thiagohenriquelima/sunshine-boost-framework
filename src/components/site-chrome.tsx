@@ -1,9 +1,10 @@
 import { useState, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
-import { Car, MessageCircle, Menu, X, Phone } from "lucide-react";
+import { MessageCircle, Menu, X, Phone, Car } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logoAsset from "@/assets/logo-top-veiculos.png.asset.json";
 
-function BrandLogo({ className = "" }: { className?: string }) {
+function BrandLogo() {
   const [errored, setErrored] = useState(false);
   if (errored) {
     return (
@@ -14,10 +15,10 @@ function BrandLogo({ className = "" }: { className?: string }) {
   }
   return (
     <img
-      src="/logo-top-veiculos.png"
+      src={logoAsset.url}
       alt="Top Veículos"
       onError={() => setErrored(true)}
-      className={`w-auto object-contain h-[34px] sm:h-[48px] ${className}`}
+      className="w-auto object-contain h-[38px] sm:h-[52px]"
     />
   );
 }
