@@ -18,7 +18,7 @@ function BrandLogo() {
       src={logoAsset.url}
       alt="Top Veículos"
       onError={() => setErrored(true)}
-      className="w-auto max-w-none object-contain h-[42px] sm:h-[56px]"
+      className="w-auto max-w-none object-contain h-12 sm:h-20 lg:h-[88px]"
     />
   );
 }
@@ -52,7 +52,7 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <header className="fixed top-0 inset-x-0 z-50 backdrop-blur-xl bg-background/70 border-b border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 lg:h-28 flex items-center justify-between">
         <Link to="/" className="flex items-center group" aria-label="Top Veículos - Início">
           <BrandLogo />
         </Link>
@@ -149,7 +149,7 @@ export function PageShell({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Header />
-      <main className="pt-16 pb-28 sm:pb-16">{children}</main>
+      <main className="pt-20 lg:pt-28 pb-28 sm:pb-16">{children}</main>
       <Footer />
       <FloatingWhatsapp />
     </div>
