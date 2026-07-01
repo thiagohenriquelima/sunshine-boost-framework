@@ -28,8 +28,13 @@ function EstoquePage() {
   const [gear, setGear] = useState<string>("all");
   const [fuel, setFuel] = useState<string>("all");
   const [year, setYear] = useState<string>("all");
+  const [color, setColor] = useState<string>("all");
   const [maxPrice, setMaxPrice] = useState<string>("");
   const [search, setSearch] = useState<string>("");
+
+  const brands = useMemo(() => Array.from(new Set(STOCK.map((v) => v.brand))).sort(), []);
+  const colors = useMemo(() => Array.from(new Set(STOCK.map((v) => v.color))).sort(), []);
+  const years = useMemo(() => Array.from(new Set(STOCK.map((v) => String(v.yearNum)))).sort((a, b) => Number(b) - Number(a)), []);
 
   const filtered = useMemo(() => STOCK.filter((v) => {
     if (brand !== "all" && v.brand !== brand) return false;
@@ -37,13 +42,14 @@ function EstoquePage() {
     if (gear !== "all" && v.gear !== gear) return false;
     if (fuel !== "all" && v.fuel !== fuel) return false;
     if (year !== "all" && String(v.yearNum) !== year) return false;
+    if (color !== "all" && v.color !== color) return false;
     const max = Number(maxPrice.replace(/\D/g, ""));
     if (max > 0 && v.priceNum > max) return false;
     if (search && !v.name.toLowerCase().includes(search.toLowerCase())) return false;
     return true;
-  }), [brand, type, gear, fuel, year, maxPrice, search]);
+  }), [brand, type, gear, fuel, year, color, maxPrice, search]);
 
-  const reset = () => { setBrand("all"); setType("all"); setGear("all"); setFuel("all"); setYear("all"); setMaxPrice(""); setSearch(""); };
+  const reset = () => { setBrand("all"); setType("all"); setGear("all"); setFuel("all"); setYear("all"); setColor("all"); setMaxPrice(""); setSearch(""); };
 
   return (
     <PageShell>
@@ -64,11 +70,12 @@ function EstoquePage() {
                   <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Ex: Creta, HB20..." className="h-11 pl-9 bg-background border-border" />
                 </div>
               </div>
-              <Filter label="Marca" value={brand} onChange={setBrand} options={["Hyundai", "Infiniti"]} />
+              <Filter label="Marca" value={brand} onChange={setBrand} options={brands} />
               <Filter label="Tipo" value={type} onChange={setType} options={["Hatch", "Sedan", "SUV", "Picape"]} />
-              <Filter label="Ano" value={year} onChange={setYear} options={["2024", "2023", "2022", "2021", "2020"]} />
+              <Filter label="Ano" value={year} onChange={setYear} options={years} />
               <Filter label="Câmbio" value={gear} onChange={setGear} options={["Automático", "Manual"]} />
               <Filter label="Combustível" value={fuel} onChange={setFuel} options={["Flex", "Gasolina", "Diesel"]} />
+              <Filter label="Cor" value={color} onChange={setColor} options={colors} />
               <div className="space-y-2">
                 <Label className="text-xs text-muted-foreground">Preço máximo</Label>
                 <Input value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} placeholder="R$ 150.000" className="h-11 bg-background border-border" />

@@ -2,130 +2,220 @@ import car1 from "@/assets/car-1.jpg";
 import car2 from "@/assets/car-2.jpg";
 import car3 from "@/assets/car-3.jpg";
 
+export type VehicleType = "Hatch" | "Sedan" | "SUV" | "Picape";
+
 export type Vehicle = {
+  id: string;
   slug: string;
   img: string;
   gallery: string[];
+  images: string[];
   name: string;
   brand: string;
-  type: string;
+  model: string;
+  type: VehicleType;
+  category: VehicleType;
+  color: string;
   year: string;
   yearNum: number;
   km: string;
+  kmNum: number;
   gear: string;
+  transmission: string;
   fuel: string;
+  /** Final da placa — apenas o último dígito. Público. */
   plate: string;
+  plateEnd: string;
+  /** Placa completa — apenas uso interno, nunca renderizar publicamente. */
+  plateFull: string;
   price: string;
+  formattedPrice: string;
   priceNum: number;
   parcel: string;
+  estimatedInstallment: number;
   tag: string;
+  tags: string[];
   pitch: string;
+  description: string;
   highlights: string[];
   features: string[];
+  idealUse: string[];
   condition: string;
   whyWorth: string[];
+  featured?: boolean;
 };
 
-export const VEHICLES: Vehicle[] = [
-  {
-    slug: "hyundai-creta-limited-1-0-turbo-2023",
-    img: car1, gallery: [car1, car2, car3, car1],
-    name: "Hyundai Creta Limited 1.0 Turbo",
-    brand: "Hyundai", type: "SUV", year: "2023/2023", yearNum: 2023,
-    km: "18.420 km", gear: "Automático", fuel: "Flex", plate: "7",
-    price: "R$ 124.900", priceNum: 124900, parcel: "R$ 1.890",
-    tag: "Mais procurado", pitch: "SUV completo, ideal para família.",
-    highlights: ["Motor 1.0 Turbo eficiente", "Central multimídia 10\"", "Painel digital", "Câmbio automático 6 marchas"],
-    features: ["Ar-condicionado digital", "Direção elétrica", "Vidros e travas elétricos", "Airbags frontais e laterais", "ABS com EBD", "Controle de tração e estabilidade", "Sensor de estacionamento", "Câmera de ré", "Rodas de liga 17\"", "Faróis em LED"],
-    condition: "Veículo em excelente estado, único dono, todas as revisões em concessionária, sem detalhes na lataria.",
-    whyWorth: ["SUV com baixíssima quilometragem", "Garantia de fábrica vigente", "Procedência 100% comprovada", "Aceita troca e financiamento facilitado"],
-  },
-  {
-    slug: "hyundai-hb20-comfort-plus-1-0-2022",
-    img: car2, gallery: [car2, car1, car3, car2],
-    name: "Hyundai HB20 Comfort Plus 1.0",
-    brand: "Hyundai", type: "Hatch", year: "2022/2023", yearNum: 2022,
-    km: "32.100 km", gear: "Manual", fuel: "Flex", plate: "3",
-    price: "R$ 72.500", priceNum: 72500, parcel: "R$ 1.190",
-    tag: "Entrada baixa", pitch: "Econômico, fácil de aprovar.",
-    highlights: ["Baixo consumo", "Manutenção barata", "Excelente para o dia a dia", "Aprovação facilitada"],
-    features: ["Ar-condicionado", "Direção hidráulica", "Vidros elétricos dianteiros", "Travas elétricas", "Airbags duplos", "Freios ABS", "Computador de bordo", "Central multimídia"],
-    condition: "Carro revisado, pneus novos, documentação 100% em dia, pronto para transferência.",
-    whyWorth: ["Entrada a partir de R$ 5.000", "Parcelas que cabem no bolso", "Hatch mais vendido do Brasil", "Revenda garantida"],
-  },
-  {
-    slug: "infiniti-q50-sport-3-0-v6-2021",
-    img: car3, gallery: [car3, car1, car2, car3],
-    name: "Infiniti Q50 Sport 3.0 V6",
-    brand: "Infiniti", type: "Sedan", year: "2021/2021", yearNum: 2021,
-    km: "41.800 km", gear: "Automático", fuel: "Gasolina", plate: "1",
-    price: "R$ 189.900", priceNum: 189900, parcel: "R$ 2.890",
-    tag: "Premium", pitch: "Conforto, status e desempenho premium.",
-    highlights: ["Motor V6 3.0 Biturbo 400cv", "Tração traseira esportiva", "Bancos em couro premium", "Som Bose 16 alto-falantes"],
-    features: ["Teto solar panorâmico", "Bancos com ajuste elétrico e memória", "Ar-condicionado dual zone", "Piloto automático adaptativo", "Sensores 360º", "Câmera de ré HD", "Faróis full LED adaptativos", "Rodas de liga 19\"", "Partida sem chave", "Acabamento em alumínio escovado"],
-    condition: "Veículo impecável, segundo dono, revisões em dia, interior preservado, sem retoques na pintura.",
-    whyWorth: ["Sedã premium por preço de intermediário", "Pacote completo de tecnologia", "Desempenho de superesportivo", "Exclusividade nas ruas"],
-  },
-  {
-    slug: "hyundai-creta-action-1-6-2022",
-    img: car1, gallery: [car1, car2, car3, car1],
-    name: "Hyundai Creta Action 1.6",
-    brand: "Hyundai", type: "SUV", year: "2022/2022", yearNum: 2022,
-    km: "39.800 km", gear: "Automático", fuel: "Flex", plate: "5",
-    price: "R$ 108.900", priceNum: 108900, parcel: "R$ 1.690",
-    tag: "Oportunidade", pitch: "SUV versátil com ótimo custo-benefício.",
-    highlights: ["Motor 1.6 econômico", "Câmbio automático", "Espaço interno generoso", "Ótimo custo-benefício"],
-    features: ["Ar-condicionado", "Direção elétrica", "Multimídia com Android Auto/CarPlay", "Airbags", "Freios ABS", "Controle de estabilidade", "Câmera de ré", "Rodas de liga"],
-    condition: "Veículo bem cuidado, revisões em dia, sem retrabalhos, garantia adicional opcional.",
-    whyWorth: ["SUV automático abaixo do mercado", "Excelente para família", "Ideal para troca", "Aceita entrada parcelada"],
-  },
-  {
-    slug: "hyundai-hb20-sense-1-0-2023",
-    img: car2, gallery: [car2, car1, car3, car2],
-    name: "Hyundai HB20 Sense 1.0",
-    brand: "Hyundai", type: "Hatch", year: "2023/2024", yearNum: 2023,
-    km: "12.500 km", gear: "Manual", fuel: "Flex", plate: "9",
-    price: "R$ 78.900", priceNum: 78900, parcel: "R$ 1.290",
-    tag: "Mais procurado", pitch: "Quase zero, baixa quilometragem.",
-    highlights: ["Praticamente zero km", "Garantia de fábrica", "Baixíssimo consumo", "Design atualizado"],
-    features: ["Ar-condicionado", "Direção elétrica", "Vidros elétricos", "Airbags duplos", "ABS", "Computador de bordo", "Bluetooth"],
-    condition: "Quase zero, único dono, sem detalhes, manual e chave reserva.",
-    whyWorth: ["Garantia de fábrica ativa", "Quilometragem baixíssima", "Ideal para primeiro carro", "Revenda garantida"],
-  },
-  {
-    slug: "infiniti-q50-luxe-2-0-turbo-2020",
-    img: car3, gallery: [car3, car1, car2, car3],
-    name: "Infiniti Q50 Luxe 2.0 Turbo",
-    brand: "Infiniti", type: "Sedan", year: "2020/2020", yearNum: 2020,
-    km: "58.200 km", gear: "Automático", fuel: "Gasolina", plate: "4",
-    price: "R$ 159.900", priceNum: 159900, parcel: "R$ 2.490",
-    tag: "Premium", pitch: "Sedã luxo com pacote completo.",
-    highlights: ["Motor 2.0 Turbo 211cv", "Pacote luxo completo", "Bancos em couro", "Som premium"],
-    features: ["Teto solar", "Bancos elétricos com memória", "Ar dual zone", "Sensores de estacionamento", "Câmera de ré", "Faróis LED", "Rodas 18\"", "Partida sem chave"],
-    condition: "Carro de garagem, revisado, interior impecável, pintura original.",
-    whyWorth: ["Luxo por preço justo", "Manutenção em dia", "Exclusividade garantida", "Aceita troca premium"],
-  },
+type Raw = {
+  name: string; color: string; plateFull: string; year: number; price: number;
+  type: VehicleType; gear: string; fuel: string; brand: string;
+};
+
+const RAW: Raw[] = [
+  { name: "Onix LT 1.0", color: "Preta", plateFull: "QUT2H70", year: 2019, price: 58900, type: "Hatch", gear: "Manual", fuel: "Flex", brand: "Chevrolet" },
+  { name: "Celta Life 1.0", color: "Prata", plateFull: "MYW1F03", year: 2007, price: 22900, type: "Hatch", gear: "Manual", fuel: "Flex", brand: "Chevrolet" },
+  { name: "HB20 Vision 1.0", color: "Branca", plateFull: "RTT6B20", year: 2022, price: 65900, type: "Hatch", gear: "Manual", fuel: "Flex", brand: "Hyundai" },
+  { name: "Mobi Like 1.0", color: "Branca", plateFull: "RVA3D59", year: 2023, price: 56900, type: "Hatch", gear: "Manual", fuel: "Flex", brand: "Fiat" },
+  { name: "Onix LT 1.0", color: "Prata", plateFull: "QKQ2G50", year: 2015, price: 43900, type: "Hatch", gear: "Manual", fuel: "Flex", brand: "Chevrolet" },
+  { name: "T-Cross TSI 1.0", color: "Prata", plateFull: "QFN3B12", year: 2022, price: 110900, type: "SUV", gear: "Automático", fuel: "Flex", brand: "Volkswagen" },
+  { name: "Sandero Zen 1.0", color: "Branca", plateFull: "QSL0G33", year: 2021, price: 49900, type: "Hatch", gear: "Manual", fuel: "Flex", brand: "Renault" },
+  { name: "Fox Connect 1.6", color: "Branca", plateFull: "QFW6J33", year: 2018, price: 57900, type: "Hatch", gear: "Manual", fuel: "Flex", brand: "Volkswagen" },
+  { name: "Polo Track 1.0", color: "Branca", plateFull: "TDI9E50", year: 2025, price: 79900, type: "Hatch", gear: "Manual", fuel: "Flex", brand: "Volkswagen" },
+  { name: "Saveiro Trend 1.6", color: "Branca", plateFull: "QFT6J18", year: 2016, price: 48900, type: "Picape", gear: "Manual", fuel: "Flex", brand: "Volkswagen" },
+  { name: "Kwid Zen 1.0", color: "Prata", plateFull: "SKE1J31", year: 2025, price: 52900, type: "Hatch", gear: "Manual", fuel: "Flex", brand: "Renault" },
+  { name: "Ford Ka 1.0", color: "Branca", plateFull: "OEU1953", year: 2013, price: 25900, type: "Hatch", gear: "Manual", fuel: "Flex", brand: "Ford" },
+  { name: "Gol MSI 1.6", color: "Preta", plateFull: "RLS4E87", year: 2022, price: 58900, type: "Hatch", gear: "Manual", fuel: "Flex", brand: "Volkswagen" },
+  { name: "Prisma LT 1.4", color: "Branca", plateFull: "QFJ4J48", year: 2015, price: 54900, type: "Sedan", gear: "Manual", fuel: "Flex", brand: "Chevrolet" },
+  { name: "Prisma LT 1.4", color: "Azul", plateFull: "PCK9B21", year: 2015, price: 50900, type: "Sedan", gear: "Manual", fuel: "Flex", brand: "Chevrolet" },
+  { name: "Frontier 2.3", color: "Azul", plateFull: "RLS8E79", year: 2021, price: 145900, type: "Picape", gear: "Automático", fuel: "Diesel", brand: "Nissan" },
+  { name: "Creta M-Line 1.0", color: "Prata", plateFull: "RPQ7B60", year: 2023, price: 112900, type: "SUV", gear: "Automático", fuel: "Flex", brand: "Hyundai" },
+  { name: "Agile LTZ 1.4", color: "Prata", plateFull: "MOT0A61", year: 2011, price: 27900, type: "Hatch", gear: "Manual", fuel: "Flex", brand: "Chevrolet" },
+  { name: "Ford Ka 1.0 SE", color: "Branca", plateFull: "QSJ0A13", year: 2021, price: 52900, type: "Hatch", gear: "Manual", fuel: "Flex", brand: "Ford" },
+  { name: "Jeep Compass", color: "Preta", plateFull: "QFZ6B07", year: 2017, price: 75900, type: "SUV", gear: "Automático", fuel: "Flex", brand: "Jeep" },
+  { name: "S10 Rodeio", color: "Prata", plateFull: "MOC7J23", year: 2008, price: 45900, type: "Picape", gear: "Manual", fuel: "Flex", brand: "Chevrolet" },
 ];
 
-VEHICLES.push({
-  slug: "infiniti-q50-premium-2019",
-  img: car3, gallery: [car3, car1, car2, car3],
-  name: "Infiniti Q50 Premium",
-  brand: "Infiniti", type: "Sedan", year: "2019/2019", yearNum: 2019,
-  km: "68.900 km", gear: "Automático", fuel: "Gasolina", plate: "8",
-  price: "R$ 139.900", priceNum: 139900, parcel: "R$ 2.190",
-  tag: "Premium", pitch: "Sedã premium com pacote completo por preço justo.",
-  highlights: ["Motor 2.0 Turbo 211cv", "Pacote Premium completo", "Bancos em couro", "Multimídia dupla tela"],
-  features: ["Teto solar", "Bancos elétricos com memória", "Ar-condicionado dual zone", "Sensores de estacionamento", "Câmera de ré", "Faróis LED", "Rodas de liga 18\"", "Partida sem chave", "Controle de estabilidade"],
-  condition: "Veículo revisado, segundo dono, interior conservado, documentação em dia.",
-  whyWorth: ["Sedã premium abaixo do valor de mercado", "Pacote completo de tecnologia", "Exclusividade e conforto", "Aceita troca e financiamento"],
+const FEATURED_KEYS = new Set([
+  "Polo Track 1.0-2025",
+  "T-Cross TSI 1.0-2022",
+  "Creta M-Line 1.0-2023",
+  "Frontier 2.3-2021",
+  "HB20 Vision 1.0-2022",
+  "Jeep Compass-2017",
+]);
+
+const slugify = (s: string) =>
+  s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
+const fmtBRL = (n: number) =>
+  n.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 });
+
+function calcInstallment(price: number) {
+  const financed = price * 0.8;
+  const rate = 0.0199;
+  const term = 60;
+  const p = Math.pow(1 + rate, term);
+  return (financed * (rate * p)) / (p - 1);
+}
+
+function imgFor(type: VehicleType, idx: number): string {
+  if (type === "SUV") return car1;
+  if (type === "Hatch") return car2;
+  return car3; // Sedan, Picape
+}
+
+function estimateKm(year: number): number {
+  const base = Math.max(5000, (2026 - year) * 11000);
+  return Math.round(base / 500) * 500;
+}
+
+function tagFor(price: number, type: VehicleType): { tag: string; tags: string[] } {
+  if (price >= 110000) return { tag: "Premium", tags: ["Premium", "Top de linha"] };
+  if (price <= 45000) return { tag: "Entrada baixa", tags: ["Entrada baixa", "Econômico"] };
+  if (type === "SUV" || type === "Picape") return { tag: "Oportunidade", tags: ["Oportunidade", "Robusto"] };
+  return { tag: "Mais procurado", tags: ["Mais procurado", "Popular"] };
+}
+
+function useFor(type: VehicleType): string[] {
+  if (type === "SUV") return ["Família", "Viagens", "Conforto"];
+  if (type === "Picape") return ["Trabalho", "Viagens", "Carga"];
+  if (type === "Sedan") return ["Trabalho", "Viagens"];
+  return ["Cidade", "Trabalho", "Dia a dia"];
+}
+
+function highlightsFor(r: Raw): string[] {
+  const base = [
+    `Motor eficiente e econômico`,
+    `Câmbio ${r.gear.toLowerCase()}`,
+    `Combustível ${r.fuel.toLowerCase()}`,
+    `Cor ${r.color.toLowerCase()}`,
+  ];
+  if (r.type === "SUV") base.push("Porte SUV com espaço interno generoso");
+  if (r.type === "Picape") base.push("Caçamba versátil para trabalho e lazer");
+  return base;
+}
+
+function featuresFor(r: Raw): string[] {
+  const common = ["Ar-condicionado", "Direção assistida", "Vidros elétricos", "Travas elétricas", "Airbags", "Freios ABS", "Computador de bordo"];
+  if (r.price >= 80000) common.push("Central multimídia", "Câmera de ré", "Sensor de estacionamento", "Rodas de liga leve");
+  if (r.gear === "Automático") common.push("Câmbio automático");
+  if (r.type === "SUV" || r.type === "Picape") common.push("Controle de estabilidade", "Controle de tração");
+  return common;
+}
+
+function descFor(r: Raw): string {
+  return `${r.name} ${r.year} ${r.color.toLowerCase()}, ${r.gear.toLowerCase()} a ${r.fuel.toLowerCase()}. Revisado, procedência verificada e pronto para financiar na Top Veículos.`;
+}
+
+function conditionFor(r: Raw): string {
+  return `Veículo revisado, documentação em dia e procedência verificada. ${r.name} de ${r.year}, cor ${r.color.toLowerCase()}, pronto para transferência.`;
+}
+
+function whyWorthFor(r: Raw): string[] {
+  return [
+    `Preço competitivo para ${r.name} ${r.year}`,
+    `Procedência 100% verificada`,
+    `Aceitamos seu usado na troca`,
+    `Financiamento facilitado em até 60x`,
+  ];
+}
+
+const slugCounts = new Map<string, number>();
+
+export const VEHICLES: Vehicle[] = RAW.map((r) => {
+  const key = `${r.name}-${r.year}`;
+  const base = `${slugify(r.name)}-${r.year}`;
+  const seen = slugCounts.get(base) ?? 0;
+  slugCounts.set(base, seen + 1);
+  const slug = seen === 0 ? base : `${base}-${slugify(r.color)}`;
+
+  const parcelaNum = calcInstallment(r.price);
+  const kmNum = estimateKm(r.year);
+  const { tag, tags } = tagFor(r.price, r.type);
+  const gallery = [imgFor(r.type, 0), imgFor(r.type, 1), imgFor(r.type, 2), imgFor(r.type, 3)];
+  const images = [1, 2, 3, 4].map((n) => `/vehicles/${slug}/0${n}.jpg`);
+
+  return {
+    id: slug,
+    slug,
+    img: gallery[0],
+    gallery,
+    images,
+    name: r.name,
+    brand: r.brand,
+    model: r.name,
+    type: r.type,
+    category: r.type,
+    color: r.color,
+    year: `${r.year}/${r.year}`,
+    yearNum: r.year,
+    km: `${kmNum.toLocaleString("pt-BR")} km`,
+    kmNum,
+    gear: r.gear,
+    transmission: r.gear,
+    fuel: r.fuel,
+    plate: r.plateFull.slice(-1),
+    plateEnd: r.plateFull.slice(-1),
+    plateFull: r.plateFull,
+    price: fmtBRL(r.price),
+    formattedPrice: fmtBRL(r.price),
+    priceNum: r.price,
+    parcel: fmtBRL(Math.round(parcelaNum)),
+    estimatedInstallment: Math.round(parcelaNum),
+    tag,
+    tags,
+    pitch: descFor(r).split(".")[0] + ".",
+    description: descFor(r),
+    highlights: highlightsFor(r),
+    features: featuresFor(r),
+    idealUse: useFor(r.type),
+    condition: conditionFor(r),
+    whyWorth: whyWorthFor(r),
+    featured: FEATURED_KEYS.has(key),
+  };
 });
 
-const SLUG_ALIASES: Record<string, string> = {
-  "hyundai-creta-limited-2023": "hyundai-creta-limited-1-0-turbo-2023",
-  "hyundai-hb20-comfort-2022": "hyundai-hb20-comfort-plus-1-0-2022",
-};
+export const FEATURED_VEHICLES: Vehicle[] = VEHICLES.filter((v) => v.featured);
 
 export const findVehicleBySlug = (slug: string) =>
-  VEHICLES.find((v) => v.slug === slug) ??
-  VEHICLES.find((v) => v.slug === SLUG_ALIASES[slug]);
+  VEHICLES.find((v) => v.slug === slug);

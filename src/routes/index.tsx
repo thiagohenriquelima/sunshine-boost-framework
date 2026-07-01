@@ -12,7 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Header, Footer, FloatingWhatsapp, WHATSAPP, WA_MSG, createWhatsAppLink } from "@/components/site-chrome";
 import heroCar from "@/assets/hero-car.jpg";
-import { VEHICLES } from "@/data/vehicles";
+import { VEHICLES, FEATURED_VEHICLES } from "@/data/vehicles";
 
 
 export const Route = createFileRoute("/")({
@@ -413,7 +413,7 @@ function Vehicles() {
           </Button>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {VEHICLES.slice(0, 3).map((v) => {
+          {(FEATURED_VEHICLES.length ? FEATURED_VEHICLES : VEHICLES.slice(0, 6)).map((v) => {
             const tagStyle =
               v.tag === "Premium" ? "bg-gradient-blue shadow-glow-blue"
               : v.tag === "Entrada baixa" ? "bg-accent shadow-glow-blue"
