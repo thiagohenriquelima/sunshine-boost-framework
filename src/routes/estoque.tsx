@@ -28,8 +28,13 @@ function EstoquePage() {
   const [gear, setGear] = useState<string>("all");
   const [fuel, setFuel] = useState<string>("all");
   const [year, setYear] = useState<string>("all");
+  const [color, setColor] = useState<string>("all");
   const [maxPrice, setMaxPrice] = useState<string>("");
   const [search, setSearch] = useState<string>("");
+
+  const brands = useMemo(() => Array.from(new Set(STOCK.map((v) => v.brand))).sort(), []);
+  const colors = useMemo(() => Array.from(new Set(STOCK.map((v) => v.color))).sort(), []);
+  const years = useMemo(() => Array.from(new Set(STOCK.map((v) => String(v.yearNum)))).sort((a, b) => Number(b) - Number(a)), []);
 
   const filtered = useMemo(() => STOCK.filter((v) => {
     if (brand !== "all" && v.brand !== brand) return false;
@@ -37,13 +42,14 @@ function EstoquePage() {
     if (gear !== "all" && v.gear !== gear) return false;
     if (fuel !== "all" && v.fuel !== fuel) return false;
     if (year !== "all" && String(v.yearNum) !== year) return false;
+    if (color !== "all" && v.color !== color) return false;
     const max = Number(maxPrice.replace(/\D/g, ""));
     if (max > 0 && v.priceNum > max) return false;
     if (search && !v.name.toLowerCase().includes(search.toLowerCase())) return false;
     return true;
-  }), [brand, type, gear, fuel, year, maxPrice, search]);
+  }), [brand, type, gear, fuel, year, color, maxPrice, search]);
 
-  const reset = () => { setBrand("all"); setType("all"); setGear("all"); setFuel("all"); setYear("all"); setMaxPrice(""); setSearch(""); };
+  const reset = () => { setBrand("all"); setType("all"); setGear("all"); setFuel("all"); setYear("all"); setColor("all"); setMaxPrice(""); setSearch(""); };
 
   return (
     <PageShell>
