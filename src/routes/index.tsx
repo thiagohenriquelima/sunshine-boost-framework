@@ -263,6 +263,7 @@ function FindCar() {
                   <SelectItem value="sedan">Sedan</SelectItem>
                   <SelectItem value="suv">SUV</SelectItem>
                   <SelectItem value="picape">Picape</SelectItem>
+                  <SelectItem value="premium">Premium</SelectItem>
                 </SelectContent>
               </Select>
             </div>
