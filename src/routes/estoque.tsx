@@ -70,11 +70,12 @@ function EstoquePage() {
                   <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Ex: Creta, HB20..." className="h-11 pl-9 bg-background border-border" />
                 </div>
               </div>
-              <Filter label="Marca" value={brand} onChange={setBrand} options={["Hyundai", "Infiniti"]} />
+              <Filter label="Marca" value={brand} onChange={setBrand} options={brands} />
               <Filter label="Tipo" value={type} onChange={setType} options={["Hatch", "Sedan", "SUV", "Picape"]} />
-              <Filter label="Ano" value={year} onChange={setYear} options={["2024", "2023", "2022", "2021", "2020"]} />
+              <Filter label="Ano" value={year} onChange={setYear} options={years} />
               <Filter label="Câmbio" value={gear} onChange={setGear} options={["Automático", "Manual"]} />
               <Filter label="Combustível" value={fuel} onChange={setFuel} options={["Flex", "Gasolina", "Diesel"]} />
+              <Filter label="Cor" value={color} onChange={setColor} options={colors} />
               <div className="space-y-2">
                 <Label className="text-xs text-muted-foreground">Preço máximo</Label>
                 <Input value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} placeholder="R$ 150.000" className="h-11 bg-background border-border" />
