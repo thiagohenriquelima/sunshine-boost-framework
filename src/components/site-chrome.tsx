@@ -5,13 +5,13 @@ import { Button } from "@/components/ui/button";
 
 function BrandLogo() {
   return (
-    <img
-      src="/logo-top-veiculos.png"
-      alt="Top Veículos"
-      className="w-auto max-w-none object-contain h-12 sm:h-[72px]"
-    />
+    <span className="font-display font-bold tracking-tight text-xl sm:text-2xl leading-none">
+      <span className="text-white">Top</span>
+      <span className="text-primary"> Veículos</span>
+    </span>
   );
 }
+
 
 export const WHATSAPP_NUMBER = "5583981089495";
 export const createWhatsAppLink = (msg: string) =>
