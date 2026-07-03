@@ -9,10 +9,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Header, Footer, FloatingWhatsapp, WHATSAPP, WA_MSG, createWhatsAppLink } from "@/components/site-chrome";
-import heroCarAsset from "@/assets/jeep-compass-hero.jpg.asset.json";
-const heroCar = heroCarAsset.url;
+import heroCar from "@/assets/jeep-compass-real.jpg";
 import { VEHICLES, FEATURED_VEHICLES } from "@/data/vehicles";
 
 
@@ -89,6 +89,9 @@ function Hero() {
         </div>
         <div className="relative animate-scale-in">
           <div className="absolute -inset-4 bg-gradient-red opacity-20 blur-3xl rounded-3xl" />
+          <div className="absolute -top-3 left-6 sm:left-10 z-10 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-red shadow-glow-red text-primary-foreground text-[11px] sm:text-xs font-semibold">
+            <BadgeCheck className="h-3.5 w-3.5" /> O melhor em aprovação
+          </div>
           <div className="relative rounded-3xl overflow-hidden border border-border shadow-card-premium">
             <img src={heroCar} alt="Jeep Compass branca em destaque - Top Veículos" width={1600} height={1024}
               className="w-full h-auto object-cover" />
@@ -507,6 +510,12 @@ function Advantages() {
   );
 }
 
+const formatCPF = (v: string) =>
+  v.replace(/\D/g, "").slice(0, 11)
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+
 function Simulator() {
   const [valor, setValor] = useState(80000);
   const [entrada, setEntrada] = useState(15000);
@@ -514,6 +523,9 @@ function Simulator() {
   const [nome, setNome] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [veiculo, setVeiculo] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [nascimento, setNascimento] = useState("");
+  const [possuiCnh, setPossuiCnh] = useState(false);
   const financiado = Math.max(valor - entrada, 0);
   const taxa = 0.0179; // estimada
   const parcela = financiado > 0
@@ -521,7 +533,7 @@ function Simulator() {
     : 0;
   const fmt = (n: number) => n.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 });
 
-  const propostaMsg = `Olá, meu nome é ${nome || "[nome]"}. Fiz uma simulação no site da Top Veículos. Tenho interesse no veículo ${veiculo || "[veículo]"}, com entrada de ${fmt(entrada)} e prazo de ${prazo} meses. Parcela estimada: ${fmt(parcela)}. Quero receber uma proposta.${whatsapp ? ` Meu WhatsApp: ${whatsapp}.` : ""}`;
+  const propostaMsg = `Olá, meu nome é ${nome || "[nome]"}. Fiz uma simulação no site da Top Veículos. Tenho interesse no veículo ${veiculo || "[veículo]"}, com entrada de ${fmt(entrada)} e prazo de ${prazo} meses. Parcela estimada: ${fmt(parcela)}. Quero receber uma proposta.${whatsapp ? ` Meu WhatsApp: ${whatsapp}.` : ""}${cpf ? ` CPF: ${cpf}.` : ""}${nascimento ? ` Data de nascimento: ${nascimento}.` : ""} Possuo CNH: ${possuiCnh ? "Sim" : "Não"}.`;
 
   return (
     <section id="financiamento" className="py-16 sm:py-24 relative">
@@ -574,8 +586,23 @@ function Simulator() {
                   <Input value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} maxLength={20} placeholder="(00) 00000-0000" className="mt-1" />
                 </div>
                 <div>
+                  <Label className="text-xs text-muted-foreground">CPF</Label>
+                  <Input value={cpf} onChange={(e) => setCpf(formatCPF(e.target.value))} inputMode="numeric" maxLength={14} placeholder="000.000.000-00" className="mt-1" />
+                </div>
+                <div>
+                  <Label className="text-xs text-muted-foreground">Data de nascimento</Label>
+                  <Input type="date" value={nascimento} onChange={(e) => setNascimento(e.target.value)} className="mt-1" />
+                </div>
+                <div>
                   <Label className="text-xs text-muted-foreground">Veículo de interesse</Label>
                   <Input value={veiculo} onChange={(e) => setVeiculo(e.target.value)} maxLength={60} placeholder="Ex.: Hyundai HB20" className="mt-1" />
+                </div>
+                <div className="flex items-center justify-between rounded-md border border-border bg-background px-3 h-9 mt-1 sm:col-span-2">
+                  <Label className="text-xs text-muted-foreground">Possui CNH?</Label>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-muted-foreground">{possuiCnh ? "Sim" : "Não"}</span>
+                    <Switch checked={possuiCnh} onCheckedChange={setPossuiCnh} />
+                  </div>
                 </div>
               </div>
 

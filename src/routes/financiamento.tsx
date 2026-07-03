@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
+import { Switch } from "@/components/ui/switch";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { PageShell, PageHero, createWhatsAppLink, WA_MSG } from "@/components/site-chrome";
 
@@ -36,6 +37,12 @@ function FinanciamentoPage() {
   );
 }
 
+const formatCPF = (v: string) =>
+  v.replace(/\D/g, "").slice(0, 11)
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+
 function Simulator() {
   const [valor, setValor] = useState(80000);
   const [entrada, setEntrada] = useState(15000);
@@ -43,12 +50,15 @@ function Simulator() {
   const [nome, setNome] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [veiculo, setVeiculo] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [nascimento, setNascimento] = useState("");
+  const [possuiCnh, setPossuiCnh] = useState(false);
   const financiado = Math.max(valor - entrada, 0);
   const taxa = 0.0179;
   const parcela = financiado > 0 ? (financiado * taxa) / (1 - Math.pow(1 + taxa, -prazo)) : 0;
   const fmt = (n: number) => n.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 });
 
-  const propostaMsg = `Olá, meu nome é ${nome || "[nome]"}. Fiz uma simulação no site da Top Veículos. Tenho interesse no veículo ${veiculo || "[veículo]"}, com entrada de ${fmt(entrada)} e prazo de ${prazo}x. Quero receber uma proposta. Parcela estimada: ${fmt(parcela)}.`;
+  const propostaMsg = `Olá, meu nome é ${nome || "[nome]"}. Fiz uma simulação no site da Top Veículos. Tenho interesse no veículo ${veiculo || "[veículo]"}, com entrada de ${fmt(entrada)} e prazo de ${prazo}x. Quero receber uma proposta. Parcela estimada: ${fmt(parcela)}.${cpf ? ` CPF: ${cpf}.` : ""}${nascimento ? ` Data de nascimento: ${nascimento}.` : ""} Possuo CNH: ${possuiCnh ? "Sim" : "Não"}.`;
 
   return (
     <section className="py-12 sm:py-16">
@@ -67,7 +77,16 @@ function Simulator() {
               <div className="mt-6 grid sm:grid-cols-2 gap-3">
                 <div className="space-y-1.5"><Label className="text-xs">Nome</Label><Input value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Seu nome" maxLength={80} className="h-11 bg-background border-border" /></div>
                 <div className="space-y-1.5"><Label className="text-xs">WhatsApp</Label><Input value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} placeholder="(00) 00000-0000" maxLength={20} className="h-11 bg-background border-border" /></div>
+                <div className="space-y-1.5"><Label className="text-xs">CPF</Label><Input value={cpf} onChange={(e) => setCpf(formatCPF(e.target.value))} inputMode="numeric" placeholder="000.000.000-00" maxLength={14} className="h-11 bg-background border-border" /></div>
+                <div className="space-y-1.5"><Label className="text-xs">Data de nascimento</Label><Input type="date" value={nascimento} onChange={(e) => setNascimento(e.target.value)} className="h-11 bg-background border-border" /></div>
                 <div className="space-y-1.5 sm:col-span-2"><Label className="text-xs">Veículo de interesse</Label><Input value={veiculo} onChange={(e) => setVeiculo(e.target.value)} placeholder="Ex: Hyundai HB20" maxLength={80} className="h-11 bg-background border-border" /></div>
+                <div className="flex items-center justify-between rounded-md border border-border bg-background px-3 h-11 sm:col-span-2">
+                  <Label className="text-xs">Possui CNH?</Label>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-muted-foreground">{possuiCnh ? "Sim" : "Não"}</span>
+                    <Switch checked={possuiCnh} onCheckedChange={setPossuiCnh} />
+                  </div>
+                </div>
               </div>
               <Button asChild size="lg" className="mt-5 bg-gradient-red shadow-glow-red h-12">
                 <a href={createWhatsAppLink(propostaMsg)} target="_blank" rel="noopener noreferrer"><MessageCircle className="h-5 w-5" /> Receber proposta no WhatsApp</a>
