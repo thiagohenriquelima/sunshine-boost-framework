@@ -89,8 +89,8 @@ function Hero() {
         </div>
         <div className="relative animate-scale-in">
           <div className="absolute -inset-4 bg-gradient-red opacity-20 blur-3xl rounded-3xl" />
-          <div className="absolute -top-3 left-6 sm:left-10 z-10 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-red shadow-glow-red text-primary-foreground text-[11px] sm:text-xs font-semibold">
-            <BadgeCheck className="h-3.5 w-3.5" /> O melhor em aprovação
+          <div className="absolute -top-5 left-1/2 -translate-x-1/2 z-10 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-red shadow-glow-red text-primary-foreground text-sm sm:text-base font-bold whitespace-nowrap">
+            <BadgeCheck className="h-4 w-4 sm:h-5 sm:w-5" /> O melhor em aprovação
           </div>
           <div className="relative rounded-3xl overflow-hidden border border-border shadow-card-premium">
             <img src={heroCar} alt="Jeep Compass branca em destaque - Top Veículos" width={1600} height={1024}
